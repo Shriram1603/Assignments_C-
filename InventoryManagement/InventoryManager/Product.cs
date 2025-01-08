@@ -1,4 +1,4 @@
-﻿
+﻿namespace InventoryManagement.InventoryManager;
 
 public class Product
 {
@@ -7,10 +7,11 @@ public class Product
 
     public double Price { get; set; }
 
-    public int Quantity {  get; set; }
+    public int Quantity { get; set; }
 
-    public Product(string product_name, double price, int quantity) {
-    
+    public Product(string product_name, double price, int quantity)
+    {
+
         Product_Name = product_name;
         Price = price;
         Quantity = quantity;
