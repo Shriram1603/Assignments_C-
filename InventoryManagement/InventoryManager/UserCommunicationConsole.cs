@@ -86,6 +86,50 @@ public class UserCommunicationConsole
 
     public void RemoveProduct()
     {
-        Console.WriteLine("Enter the name of the Product You want to remove.");
+        Console.WriteLine("Enter the name of the Product You want to remove :");
+        string ProductName = Console.ReadLine();
+        if (!Validator.IsValidProductName(ProductName))
+        {
+            Console.WriteLine("Product [Name] Cannot Be Empty");
+            return;
+        }
+        else 
+        {
+            //InventoryManagerFunction
+        }
+
     }
+
+    public void Edit()
+    {
+        Console.WriteLine("Enter the [Name] of the contact you want to update .");
+        string ProductName = Console.ReadLine();
+        if (!Validator.IsValidProductName(ProductName))
+        {
+            Console.WriteLine("Product [Name] Cannot Be Empty");
+            return;
+        }
+        else
+        {
+            //InventoryManagerFunction
+        }
+
+    }
+
+    public void Search()
+    {
+        Console.WriteLine("Type to Search Contact :");
+        var item = Console.ReadLine();
+        //InventoryManagerFunction
+    }
+
+    public void Display()
+    {
+
+    }
+    public void SortedSearch()
+    {
+
+    }
+
 }
