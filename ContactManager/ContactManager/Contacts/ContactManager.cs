@@ -20,7 +20,7 @@ public class ContactManager
     /// <summary>
     /// Make list private to expose only methods (Abstraction & Encapsulation)
     /// </summary>
-    private List<Contact> ContactList = new List<Contact>();
+    private IList<Contact> contactList = new List<Contact>();
 
     /// <summary>
     /// Creates the Contact Class Instance with the provided data and adds it to the ContactList.
@@ -31,21 +31,21 @@ public class ContactManager
     /// <param name="notes">Notes</param>
     public void AddItem(string name, string phone_number, string emailId, string notes)
     {
-        ContactList.Add(new Contact(name, phone_number, emailId, notes));
+        contactList.Add(new Contact(name, phone_number, emailId, notes));
     }
 
     /// <summary>
     /// Displays all the Saved Contacts in the ContactList.
     /// </summary>
     /// <exception cref="ArgumentException">No Contacts Found</exception>
-    public List<string> Display()
+    public IList<string> Display()
     {   
-        List<string> ContactListCopy = new List<string>();
+        IList<string> ContactListCopy = new List<string>();
         
-        if (ContactList.Count != 0)
+        if (contactList.Count != 0)
         {
             int Serial_no = 1;
-            foreach (Contact person in ContactList)
+            foreach (Contact person in contactList)
             {
                 ContactListCopy.Add($"{Serial_no}. {person}");
                 Serial_no++;
@@ -65,9 +65,9 @@ public class ContactManager
     /// <exception cref="ArgumentException">Contact Not Found.</exception>
     public void Remove(string Name)
     {
-        if (ContactList.Any(i => i.Name == Name))
-        {
-            ContactList.RemoveAll(i => i.Name == Name);   
+        if (contactList.Any(i => i.Name == Name))
+        {   Contact contact = contactList.First(i => i.Name == Name);
+            contactList.Remove(contact);   
         }
         else
         {
@@ -84,10 +84,10 @@ public class ContactManager
     /// <param name="email">Email to be updates</param>
     /// <param name="NameToUpdate">Name to be Updated</param>
     /// <param name="phn_number">PhoneNumber to be updated</param>
-    public List<string> Update(string name,string NameToUpdate, string phn_number, string email)
+    public IList<string> Update(string name,string NameToUpdate, string phn_number, string email)
     {   
-        List<string> Message = new List<string>();
-        Contact person = ContactList.FirstOrDefault(i => i.Name == name);
+        IList<string> Message = new List<string>();
+        Contact person = contactList.FirstOrDefault(i => i.Name == name);
         
         person.Name = String.IsNullOrEmpty(NameToUpdate) ? person.Name : NameToUpdate;
         if (person.Name != NameToUpdate)
@@ -122,7 +122,7 @@ public class ContactManager
     /// <param name="item">Any PhoneNumber or name or EmailId</param>
     public string Search(string item)
     {
-        Contact Person = ContactList.FirstOrDefault(i => i.Phone_number == item
+        Contact Person = contactList.FirstOrDefault(i => i.Phone_number == item
                         || i.Name.Equals(item, StringComparison.OrdinalIgnoreCase) 
                         || i.EmailId.Equals(item, StringComparison.OrdinalIgnoreCase));
 
@@ -144,9 +144,9 @@ public class ContactManager
     public List<string> SortedDisplay()
     {
         List<string> ContactListCopy = new List<string>();
-        if (ContactList.Count > 0)
+        if (contactList.Count > 0)
         {
-            foreach (Contact person in ContactList.OrderBy(p => p.Name))
+            foreach (Contact person in contactList.OrderBy(p => p.Name))
             {
                 ContactListCopy.Add($"{person}");
             }
@@ -165,7 +165,7 @@ public class ContactManager
     /// <returns>True if Contact is Found and flase if otherwise.</returns>
     public bool IsContactPresent(string name)
     {
-        Contact person = ContactList.FirstOrDefault(i => i.Name == name);
+        Contact person = contactList.FirstOrDefault(i => i.Name == name);
         if (person != null)
         {
             return true;

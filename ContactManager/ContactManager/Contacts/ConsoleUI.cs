@@ -108,7 +108,7 @@ public class ConsoleUI
             string phn_number = Console.ReadLine();
             Console.WriteLine("Enter the email to be updated :");
             string email = Console.ReadLine();
-            List<string> Message = _ContactManager.Update(name,NameToUpdate,phn_number,email);
+            IList<string> Message = _ContactManager.Update(name,NameToUpdate,phn_number,email);
             foreach (string message in Message)
             {
                 Console.WriteLine(message);
@@ -145,7 +145,7 @@ public class ConsoleUI
         try
         {
             Console.WriteLine("Your saved Contacts :");
-            List<string> ContactList =  _ContactManager.Display();
+            IList<string> ContactList =  _ContactManager.Display();
             foreach (string contact in ContactList)
             {
                 Console.WriteLine($"\t {contact}");
