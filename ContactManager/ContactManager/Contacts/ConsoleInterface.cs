@@ -151,7 +151,7 @@ public class ConsoleInterface
                 Console.WriteLine($"\t {contact}");
             }
         }
-        catch (Exception) 
+        catch (Exception ) 
         {
             Console.WriteLine("\n[-] You Don't Have any saved contacts :(");
         }

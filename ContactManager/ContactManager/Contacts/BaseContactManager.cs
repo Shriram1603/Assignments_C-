@@ -21,14 +21,14 @@ public class BaseContactManager
     /// Make list private to expose only methods (Abstraction & Encapsulation)
     /// </summary>
     private List<Contact> ContactList = new List<Contact>();
-   
+
     /// <summary>
     /// Creates the Contact Class Instance with the provided data and adds it to the ContactList.
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="phone_number"></param>
-    /// <param name="emailId"></param>
-    /// <param name="notes"></param>
+    /// <param name="name">ContactName</param>
+    /// <param name="phone_number">contact's_phone_number</param>
+    /// <param name="emailId">Contact's EmailID</param>
+    /// <param name="notes">Notes</param>
     public void AddItem(string name, string phone_number, string emailId, string notes)
     {
         ContactList.Add(new Contact(name, phone_number, emailId, notes));
@@ -37,6 +37,7 @@ public class BaseContactManager
     /// <summary>
     /// Displays all the Saved Contacts in the ContactList.
     /// </summary>
+    /// <exception cref="ArgumentException">No Contacts Found</exception>
     public List<string> Display()
     {   
         List<string> ContactListCopy = new List<string>();
@@ -60,7 +61,8 @@ public class BaseContactManager
     /// <summary>
     /// Removes the Contact form the ContactList base on the Name of the contact passed to it.
     /// </summary>
-    /// <param name="Name"></param>
+    /// <param name="Name">Contact's Name</param>
+    /// <exception cref="ArgumentException">Contact Not Found.</exception>
     public void Remove(string Name)
     {
         if (ContactList.Any(i => i.Name == Name))
@@ -77,7 +79,11 @@ public class BaseContactManager
     /// <summary>
     /// Finds a specified contact & prompts users to type in Updated values for each field [Name, Phone Number,EmailID]
     /// </summary>
-    /// <param name="name"></param>
+    /// <returns> A List of String Containing the Change report</returns>
+    /// <param name="name">Contact's Name</param>
+    /// <param name="email">Email to be updates</param>
+    /// <param name="NameToUpdate">Name to be Updated</param>
+    /// <param name="phn_number">PhoneNumber to be updated</param>
     public List<string> Update(string name,string NameToUpdate, string phn_number, string email)
     {   
         List<string> Message = new List<string>();
@@ -113,7 +119,7 @@ public class BaseContactManager
     /// <summary>
     /// Gets a string[Name or Phone_Number or EmailId] as Input and searches for the Contact
     /// </summary>
-    /// <param name="item"></param>
+    /// <param name="item">Any PhoneNumber or name or EmailId</param>
     public string Search(string item)
     {
         Contact Person = ContactList.FirstOrDefault(i => i.Phone_number == item
@@ -134,6 +140,7 @@ public class BaseContactManager
     /// <summary>
     /// Displays the ContactList in a Sortedby(Name) ascending order.
     /// </summary>
+    /// <returns>List of All Contacts with Details</returns>
     public List<string> SortedDisplay()
     {
         List<string> ContactListCopy = new List<string>();
@@ -151,7 +158,11 @@ public class BaseContactManager
         }
         
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name">Contact's Name</param>
+    /// <returns>True if Contact is Found and flase if otherwise.</returns>
     public bool IsContactPresent(string name)
     {
         Contact person = ContactList.FirstOrDefault(i => i.Name == name);
