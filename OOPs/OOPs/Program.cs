@@ -29,10 +29,10 @@ public class MyProgram
         savingsAccount.WithDraw(10000);
         savingsAccount.Deposit(5000);
 
-        Console.WriteLine("\nChecking Account :");
-        BankAccount checkingAccount = new CheckingAccount("123456", 20000);
-        checkingAccount.WithDraw(25000);
-        checkingAccount.Deposit(4000);
+        //Console.WriteLine("\nChecking Account :");
+        //BankAccount checkingAccount = new CheckingAccount("123456", 20000);
+        //checkingAccount.WithDraw(25000);
+        //checkingAccount.Deposit(4000);
 
 
     }
