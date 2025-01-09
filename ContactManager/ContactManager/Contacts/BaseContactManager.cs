@@ -11,7 +11,7 @@ public class BaseContactManager
     /// <summary>
     /// Dependency/Object Insertion
     /// </summary>
-    /// <param name="validator"></param>
+    /// <param name="validator">EmailId_PhoneNumber_Validator</param>
     public BaseContactManager(EmailId_PhoneNumber_Validator validator)
     {
         _Validator = validator;

@@ -16,7 +16,14 @@ public class Contact
     public String Phone_number { get; set; }
     public String EmailId { get; set; }
     public String Notes { get; set; }
-  
+    
+    /// <summary>
+    /// Constructor of Contact class
+    /// </summary>
+    /// <param name="name">Contact Name</param>
+    /// <param name="ph_number">Contact's Phone Number</param>
+    /// <param name="email">Vontact's EmailId</param>
+    /// <param name="notes">Additional notes about the Contact Person</param>
     public Contact(string name, string ph_number, string email, string notes)
     {
         Name = name;

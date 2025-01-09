@@ -14,8 +14,8 @@ public class ConsoleInterface
     /// <summary>
     /// Dependency Injection Through Contructor of ConsoleInterface Class.
     /// </summary>
-    /// <param name="Manager"></param>
-    /// <param name="validator"></param>
+    /// <param name="Manager">Object of Type BaseContactManager </param>
+    /// <param name="validator">Object of Type EmailId_PhoneNumber_Validator</param>
     public ConsoleInterface(BaseContactManager Manager, EmailId_PhoneNumber_Validator validator)
     {
         _ContactManager = Manager;
