@@ -55,4 +55,9 @@ public class InventoryManagementFunctionality
             Console.WriteLine("No items to Display");
         }
     }
+
+    public void SortProducts()
+    {
+
+    }
 }
