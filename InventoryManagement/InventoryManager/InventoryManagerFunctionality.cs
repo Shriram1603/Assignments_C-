@@ -18,7 +18,7 @@ public class InventoryManagementFunctionality
             string Choice = Console.ReadLine();
             if (Choice.Equals("yes", StringComparison.OrdinalIgnoreCase))
             {
-                item.Quantity = Quantity;
+                item.Quantity += Quantity;
                 Console.WriteLine($"[+] Product {item.Product_Name} Restocked");
             }
             else
@@ -28,4 +28,31 @@ public class InventoryManagementFunctionality
         }
     }
 
+    public void Remove(string Name)
+    {
+        if (products.Any(i => i.Product_Name.Equals(Name,StringComparison.OrdinalIgnoreCase)))
+        {
+            products.RemoveAll(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+        }
+        else
+        {
+            Console.WriteLine($"[-] Product [{Name}] does not Exist !!");
+        }
+    }
+
+    public void DisplayProducts()
+    {
+        int Serial_no = 1;
+        if (products.Count > 0)
+        {
+            foreach (var product in products)
+            {
+                Console.WriteLine($"{Serial_no}. {product}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No items to Display");
+        }
+    }
 }

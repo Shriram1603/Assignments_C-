@@ -18,4 +18,9 @@ public class Product
         Quantity = quantity;
     }
 
+    public override string ToString()
+    {
+        return $" Product Name = [{Product_Name}] ; Price = [{Price}] ; Quantity = [{Quantity}] ";
+    }
+
 }

@@ -90,12 +90,13 @@ public class UserCommunicationConsole
         string ProductName = Console.ReadLine();
         if (!Validator.IsValidProductName(ProductName))
         {
-            Console.WriteLine("Product [Name] Cannot Be Empty");
-            return;
+            Manager.Remove(ProductName);
+            
         }
         else 
         {
-            //InventoryManagerFunction
+            Console.WriteLine("Product [Name] Cannot Be Empty");
+            return;
         }
 
     }
@@ -125,7 +126,7 @@ public class UserCommunicationConsole
 
     public void Display()
     {
-
+        Manager.DisplayProducts();
     }
     public void SortedSearch()
     {
