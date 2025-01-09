@@ -10,9 +10,9 @@ class MainContactManager
     {
         Console.WriteLine("\t \t Contact Manager App ");
 
-        EmailId_PhoneNumber_Validator validator = new EmailId_PhoneNumber_Validator();
-        BaseContactManager Contacts_manager = new BaseContactManager(validator);
-        ConsoleInterface UserCommunication = new ConsoleInterface(Contacts_manager, validator);
+        ContactValidator validator = new ContactValidator();
+        ContactManager.Contacts.ContactManager Contacts_manager = new ContactManager.Contacts.ContactManager(validator);
+        ConsoleUI UserCommunication = new ConsoleUI(Contacts_manager, validator);
         bool IsRunning = true;
         while (IsRunning)
         {

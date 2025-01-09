@@ -8,7 +8,6 @@ namespace ContactManager.Contacts;
 
 /// <summary>
 /// The Contact type/object holds Name , phone number and email ID of an individual.
-/// Pass (Name, Phone Number, EmailId, Notes) as Parameter to Contructor
 /// </summary>
 public class Contact
 {
@@ -18,7 +17,7 @@ public class Contact
     public String Notes { get; set; }
     
     /// <summary>
-    /// Constructor of Contact class
+    /// Constructor of contact class
     /// </summary>
     /// <param name="name">Contact Name</param>
     /// <param name="ph_number">Contact's Phone Number</param>
@@ -34,7 +33,7 @@ public class Contact
     }
 
     /// <summary>
-    /// The String description of Contact Object
+    /// The String description of contact object
     /// </summary>
     /// <returns>" name = {Name} ; number = {Phone_number} ; EmailId = {EmailId}</returns>
     public override string ToString()

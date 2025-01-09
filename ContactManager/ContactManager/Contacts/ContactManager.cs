@@ -5,14 +5,14 @@ namespace ContactManager.Contacts;
 /// <summary>
 /// This Class Performs the actual Add, delete, update, Display, validation, search and Sorted Search functionalities;
 /// </summary>
-public class BaseContactManager
+public class ContactManager
 {   
-    private EmailId_PhoneNumber_Validator _Validator;
+    private ContactValidator _Validator;
     /// <summary>
     /// Dependency/Object Insertion
     /// </summary>
     /// <param name="validator">EmailId_PhoneNumber_Validator</param>
-    public BaseContactManager(EmailId_PhoneNumber_Validator validator)
+    public ContactManager(ContactValidator validator)
     {
         _Validator = validator;
     }

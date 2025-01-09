@@ -5,18 +5,18 @@ namespace ContactManager.Contacts;
 /// <summary>
 /// The ConsoleInterface Class is with wich the user interacts
 /// </summary>
-public class ConsoleInterface
+public class ConsoleUI
 {   
     
-    private BaseContactManager _ContactManager;
-    private EmailId_PhoneNumber_Validator _Validator;
+    private ContactManager _ContactManager;
+    private ContactValidator _Validator;
 
     /// <summary>
     /// Dependency Injection Through Contructor of ConsoleInterface Class.
     /// </summary>
     /// <param name="Manager">Object of Type BaseContactManager </param>
     /// <param name="validator">Object of Type EmailId_PhoneNumber_Validator</param>
-    public ConsoleInterface(BaseContactManager Manager, EmailId_PhoneNumber_Validator validator)
+    public ConsoleUI(ContactManager Manager, ContactValidator validator)
     {
         _ContactManager = Manager;
         _Validator = validator;
