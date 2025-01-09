@@ -1,4 +1,6 @@
-﻿namespace ContactManager.Contacts;
+﻿using System;
+
+namespace ContactManager.Contacts;
 
 /// <summary>
 /// The ConsoleInterface Class is with wich the user interacts
@@ -6,15 +8,17 @@
 public class ConsoleInterface
 {   
     
-    private ContactManagerFunctionality _ContactManager;
-    private Validator _Validator;
+    private BaseContactManager _ContactManager;
+    private EmailId_PhoneNumber_Validator _Validator;
 
     /// <summary>
-    /// Dependency Injection Through Contructor of ConsoleInterface Class
+    /// Dependency Injection Through Contructor of ConsoleInterface Class.
     /// </summary>
-    public ConsoleInterface(ContactManagerFunctionality i, Validator validator)
+    /// <param name="Manager"></param>
+    /// <param name="validator"></param>
+    public ConsoleInterface(BaseContactManager Manager, EmailId_PhoneNumber_Validator validator)
     {
-        _ContactManager = i;
+        _ContactManager = Manager;
         _Validator = validator;
     }
 
@@ -73,9 +77,18 @@ public class ConsoleInterface
     /// </summary>
     public void Delete()
     {
-        Console.WriteLine("Enter the Contacts name that you want to Delete");
-        string item = Console.ReadLine();
-        _ContactManager.Remove(item);
+        try
+        {
+            Console.WriteLine("Enter the Contacts name that you want to Delete");
+            string item = Console.ReadLine();
+            _ContactManager.Remove(item);
+            Console.WriteLine("\n[+] Contact Deleted Successfully");
+        }
+        catch 
+        {
+            Console.WriteLine("\n[-] Contact Not Found");
+        }
+        
 
     }
     /// <summary>
@@ -84,31 +97,79 @@ public class ConsoleInterface
     public void Edit()
     {
         Console.WriteLine("Enter the name of the contact You want to update :");
-        var name = Console.ReadLine();
-        _ContactManager.Update(name);
+        string name = Console.ReadLine();
+        if (_ContactManager.IsContactPresent(name))
+        {
+            Console.WriteLine($"\n[+] Updating Contact of {name}");
+            Console.WriteLine("\nif you don't want to update a particular field leave it blank (just press enter) \n");
+            Console.WriteLine("\nEnter the name to update: ");
+            string NameToUpdate = Console.ReadLine();
+            Console.WriteLine("\nEnter the number to update : ");
+            string phn_number = Console.ReadLine();
+            Console.WriteLine("Enter the email to be updated :");
+            string email = Console.ReadLine();
+            _ContactManager.Update(name,NameToUpdate,phn_number,email);
+
+        }
+        else
+        {
+            Console.WriteLine("\n[-] Person not found");
+        }
     }
     /// <summary>
     /// Gets one of the types [Name, Phone_number, Email_Id ] to search for that contact
     /// </summary>
     public void Search()
     {
-        Console.WriteLine("Type to Search Contact :");
-        var item = Console.ReadLine();
-        _ContactManager.Search(item);
+        try
+        {
+            Console.WriteLine("Type to Search Contact :");
+            var item = Console.ReadLine();
+            string SearchedItem = _ContactManager.Search(item);
+            Console.WriteLine(SearchedItem);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Contact with details {ex.Message} Not Found.");
+        }
+        
     }
     /// <summary>
     /// Displays The List of Contacts
     /// </summary>
     public void Display()
     {
-        _ContactManager.Display();
-    }
+        try
+        {
+            Console.WriteLine("Your saved Contacts :");
+            List<string> ContactList =  _ContactManager.Display();
+            foreach (string contact in ContactList)
+            {
+                Console.WriteLine($"\t {contact}");
+            }
+        }
+        catch (Exception) 
+        {
+            Console.WriteLine("\n[-] You Don't Have any saved contacts :(");
+        }
+     }
     /// <summary>
     /// Displays The List of Contacts in Sorted order [Sorted By Name]
     /// </summary>
     public void SortedSearch()
     {
-        _ContactManager.SortedDisplay();
+        try
+        {
+            List<string> ContactList = _ContactManager.SortedDisplay();
+            foreach(string contact in ContactList)
+            {
+                Console.WriteLine(contact);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("[-] No Contacts Found!!");
+        }
     }
 
 

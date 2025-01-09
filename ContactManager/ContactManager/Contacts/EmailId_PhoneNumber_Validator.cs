@@ -3,7 +3,7 @@
 /// <summary>
 /// Validator Class to Validate Phone Number and EmailId
 /// </summary>
-public class Validator
+public class EmailId_PhoneNumber_Validator
 {
     /// <summary>
     /// Validates EmailId by checking if .com is present at the end to the string and if it contains @

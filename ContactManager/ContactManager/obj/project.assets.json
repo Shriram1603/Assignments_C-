@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\shriram.saravanan\\Documents\\C#_Assignments\\ContactManager\\ContactManager\\ContactManager.csproj",
+      "projectUniqueName": "C:\\Users\\shriram.saravanan\\Documents\\Assignments_C#\\ContactManager\\ContactManager\\ContactManager.csproj",
       "projectName": "ContactManager",
-      "projectPath": "C:\\Users\\shriram.saravanan\\Documents\\C#_Assignments\\ContactManager\\ContactManager\\ContactManager.csproj",
+      "projectPath": "C:\\Users\\shriram.saravanan\\Documents\\Assignments_C#\\ContactManager\\ContactManager\\ContactManager.csproj",
       "packagesPath": "C:\\Users\\shriram.saravanan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\shriram.saravanan\\Documents\\C#_Assignments\\ContactManager\\ContactManager\\obj\\",
+      "outputPath": "C:\\Users\\shriram.saravanan\\Documents\\Assignments_C#\\ContactManager\\ContactManager\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
