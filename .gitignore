@@ -1,2 +1,11 @@
-bin
-.vs
+ContactManager/ContactManager/bin/
+ContactManager/ContactManager/obj/
+ContactManager/.vs
+
+OOPs/OOPs/bin/
+OOPs/OOPs/obj/
+OOPs/.vs
+
+InventoryManagement/InventorManagement/bin/
+InventorManagement/InventorManagement/obj/
+InventorManagement/.vs
