@@ -1,5 +1,5 @@
 ﻿namespace InventoryManagement.InventoryManager;
-
+using System;
 public class UserCommunicationConsole
 {
 
@@ -32,7 +32,7 @@ public class UserCommunicationConsole
     {
         Console.WriteLine("Enter the [Name] of the Product : ");
         string productName = Console.ReadLine();
-        if (!Validator.IsValidProductName(productName))
+        if (Validator.IsValidProductName(productName))
         {
             Console.WriteLine("Product Name Cannot Be Empty");
             return;
@@ -80,7 +80,7 @@ public class UserCommunicationConsole
         {
             Console.WriteLine("Enter an integer value");
         }
-        //InventoryManagerFunction
+        Manager.Add(productName, Price, Quantity);
 
     }
 

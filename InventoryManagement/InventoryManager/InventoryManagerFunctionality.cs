@@ -1,12 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace InventoryManagement.InventoryManager;
 
-namespace InventoryManagement.InventoryManager
+public class InventoryManagementFunctionality
 {
-    internal class InventoryManagerFunctionality
-    {
+    private List<Product> products = new List<Product>();
+
+    public void Add(string Name, double Price, int Quantity)
+    {   Product item = products.FirstOrDefault(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+        if(item == null)
+        {
+            products.Add(new Product(Name, Price, Quantity));
+            Console.WriteLine("[+] Product Added !!");
+        }
+        else
+        {
+            Console.WriteLine("[*] Product with the same Name was Found. Do You want to Restock ? [Yes/No]");
+            string Choice = Console.ReadLine();
+            if (Choice.Equals("yes", StringComparison.OrdinalIgnoreCase))
+            {
+                item.Quantity = Quantity;
+                Console.WriteLine($"[+] Product {item.Product_Name} Restocked");
+            }
+            else
+            {
+                Console.WriteLine("[-] Then Provide a Unique Product Name or include Brand Name !!");
+            }
+        }
     }
+
 }

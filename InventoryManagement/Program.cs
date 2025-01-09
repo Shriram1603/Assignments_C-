@@ -1,19 +1,12 @@
 ﻿
 
-public class Product
+using InventoryManagement.InventoryManager;
+
+InventoryManagementFunctionality Manager =new InventoryManagementFunctionality();
+UserCommunicationConsole Communication = new UserCommunicationConsole(Manager);
+
+while (true)
 {
-    public Guid Id = Guid.NewGuid();
-    public string Product_Name { get; set; }
-
-    public double Price { get; set; }
-
-    public int Quantity {  get; set; }
-
-    public Product(string product_name, double price, int quantity) {
-    
-        Product_Name = product_name;
-        Price = price;
-        Quantity = quantity;
-    }
-
+    Communication.AddProduct();
 }
+

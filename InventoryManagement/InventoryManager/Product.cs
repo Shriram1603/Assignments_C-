@@ -1,4 +1,5 @@
 ﻿namespace InventoryManagement.InventoryManager;
+using System;
 
 public class Product
 {
