@@ -25,7 +25,7 @@ class MainContactManager
                         UserCommunication.AddUser();
                         break;
                     case 2:
-                        UserCommunication.Display();
+                        UserCommunication.DisplayContacts();
                         break;
 
                     case 3:

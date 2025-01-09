@@ -140,7 +140,7 @@ public class ConsoleUI
     /// <summary>
     /// Displays The List of Contacts
     /// </summary>
-    public void Display()
+    public void DisplayContacts()
     {
         try
         {
