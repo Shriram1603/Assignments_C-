@@ -78,14 +78,15 @@ public class BaseContactManager
     /// Finds a specified contact & prompts users to type in Updated values for each field [Name, Phone Number,EmailID]
     /// </summary>
     /// <param name="name"></param>
-    public void Update(string name,string NameToUpdate, string phn_number, string email)
-    {
+    public List<string> Update(string name,string NameToUpdate, string phn_number, string email)
+    {   
+        List<string> Message = new List<string>();
         Contact person = ContactList.FirstOrDefault(i => i.Name == name);
         
         person.Name = String.IsNullOrEmpty(NameToUpdate) ? person.Name : NameToUpdate;
         if (person.Name != NameToUpdate)
         {
-            Console.WriteLine("\n[-] Empty Name - No changes Occured");
+            Message.Add("\n[-] Empty Name - No changes Occured");
         }
 
         person.Phone_number = !String.IsNullOrEmpty(phn_number)
@@ -93,7 +94,7 @@ public class BaseContactManager
                            && _Validator.IsValidPhoneNumber(phn_number) ? phn_number : person.Phone_number;
         if (person.Phone_number != phn_number)
         {
-            Console.WriteLine("\n[-] Invalid or Empty phone number - No changes Occured");
+            Message.Add("\n[-] Invalid or Empty phone number - No changes Occured");
         }
         person.EmailId = !String.IsNullOrEmpty(email) 
                       || !String.IsNullOrWhiteSpace(email)
@@ -101,8 +102,9 @@ public class BaseContactManager
         
         if (email != person.EmailId)
         {
-            Console.WriteLine("\n[-] Empty or Invalid Email_Id - No changes Occured");
+            Message.Add("\n[-] Empty or Invalid Email_Id - No changes Occured");
         }
+        return Message;
         
     }
 

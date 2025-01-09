@@ -108,8 +108,11 @@ public class ConsoleInterface
             string phn_number = Console.ReadLine();
             Console.WriteLine("Enter the email to be updated :");
             string email = Console.ReadLine();
-            _ContactManager.Update(name,NameToUpdate,phn_number,email);
-
+            List<string> Message = _ContactManager.Update(name,NameToUpdate,phn_number,email);
+            foreach (string message in Message)
+            {
+                Console.WriteLine(message);
+            }
         }
         else
         {
