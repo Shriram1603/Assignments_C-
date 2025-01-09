@@ -4,8 +4,8 @@ using OOPs.BankingSystem;
 
 //Shows the Working of ShapeHierarchy
 Console.WriteLine("\n[1] - task1 : ShapeHierarchy :");
-Rectangle rectangle = new Rectangle("Blue", 4, 7);
-Circle circle = new Circle("Yellow", 5.3);
+Rectangle rectangle = new Rectangle("Blue",4, 7);
+Circle circle = new Circle("Red",5.3);
 rectangle.PrintDetails();
 circle.PrintDetails();
 

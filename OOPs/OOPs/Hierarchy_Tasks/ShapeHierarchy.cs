@@ -25,6 +25,12 @@ public class Rectangle : Shape
     public int Length { get; set; }
     public int Width { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="colour">Colour of the Shape</param>
+    /// <param name="length">Length of the Rectangle</param>
+    /// <param name="width">Width of the Rectangle.</param>
     public Rectangle(string colour, int length, int width)
     {
         Colour = colour;

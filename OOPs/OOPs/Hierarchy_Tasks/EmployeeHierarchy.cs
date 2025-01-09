@@ -24,6 +24,12 @@ public class Manager : Employee
 
     private Random _random;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name">Name of the Manager.</param>
+    /// <param name="salary">Salary of the manager</param>
+    /// <param name="random">Object of type Random to calculate bonus</param>
     public Manager(string name, decimal salary, Random random) {
         Name = name;
         Salary = salary;
@@ -59,6 +65,12 @@ public class Developer : Employee
 
     private Random _random;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name">Name of the Developer.</param>
+    /// <param name="salary">Salary of the Developer</param>
+    /// <param name="random">Object of type Random to calculate bonus</param>
     public Developer(string name, decimal salary, Random obj)
     {
         Name = name;

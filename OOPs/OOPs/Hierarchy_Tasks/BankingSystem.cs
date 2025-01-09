@@ -9,7 +9,11 @@ public class BankAccount
     protected string _Account_Number {  get; set; }
     protected decimal _balance { get; set; }
 
-
+    /// <summary>
+    /// Contructor Of BankAccount Class.
+    /// </summary>
+    /// <param name="accountNumber">Account Number of the BankAccount.</param>
+    /// <param name="balance">Initial Ammount Deposited In the Account. </param>
     public BankAccount(string accountNumber, decimal balance)
     {
         _Account_Number = accountNumber;
@@ -18,7 +22,7 @@ public class BankAccount
     /// <summary>
     /// Deposits or adds the amount to the existing balance.
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">Money to be added to the Balance</param>
     public void Deposit(decimal amount)
     {
         _balance = _balance + amount;
@@ -28,7 +32,7 @@ public class BankAccount
     /// <summary>
     /// Virtual method to be overridden in SavingsAccount and CheckingAccount
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">Money to be taken or Subtracted from balance</param>
     public virtual void WithDraw(decimal amount) {
         if (amount > _balance) 
         {
@@ -51,9 +55,9 @@ public class SavingsAccount : BankAccount
     private const int Minimum_Balance = 5000;
     public SavingsAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
     /// <summary>
-    /// Overriding WithDraw Method to Set a Minimum amount to always be maintain a small amount.
+    /// Overriding WithDraw Method to Set a Minimum amount to always maintain a set amount.
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">Money to be taken or Subtracted from balance</param>
     public override void WithDraw(decimal amount) {
     
         if (amount > _balance) 
@@ -76,13 +80,18 @@ public class SavingsAccount : BankAccount
 /// Class of type BankAccount specifically for Checking Account.
 /// </summary>
 public class CheckingAccount : BankAccount
-{
+{   
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="accountNumber">Customer's Account Number.</param>
+    /// <param name="balance">Customer' Balance Amount.</param>
     public CheckingAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
 
     /// <summary>
     /// Overriding WithDraw Method to Remove all restrictions when WithDrawing.
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">Money to be taken or Subtracted from balance</param>
     public override void WithDraw(decimal amount) { 
         
         _balance -= amount;
