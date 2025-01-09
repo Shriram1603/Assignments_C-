@@ -24,10 +24,10 @@ public class Manager : Employee
 
     private Random _random;
 
-    public Manager(string name, decimal salary, Random obj) {
+    public Manager(string name, decimal salary, Random random) {
         Name = name;
         Salary = salary;
-        this._random = obj;
+        this._random = random;
     }
     /// <summary>
     /// Calculates a Random Bonus Amount for a Manager.
