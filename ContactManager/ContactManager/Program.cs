@@ -2,9 +2,9 @@
 using ContactManager.Contacts;
 
 /// <summary>
-/// Switched to Main() rather than Top Level Statements.
+/// The main class is responsible for running the contact application.
 /// </summary>
-class MainContactManager
+class MainClass
 {
     static void Main()
     {
@@ -12,34 +12,34 @@ class MainContactManager
 
         ContactValidator validator = new ContactValidator();
         ContactManager.Contacts.ContactManager Contacts_manager = new ContactManager.Contacts.ContactManager(validator);
-        ConsoleUI UserCommunication = new ConsoleUI(Contacts_manager, validator);
+        ConsoleUI Contacts = new ConsoleUI(Contacts_manager, validator);
         bool IsRunning = true;
         while (IsRunning)
         {
             try
             {
-                int userChoice = UserCommunication.ShowMenu();
+                int userChoice = Contacts.ShowMenu();
                 switch (userChoice)
                 {
-                    case 1:
-                        UserCommunication.AddContact();
+                    case (int)Option.Add:
+                        Contacts.AddContact();
                         break;
-                    case 2:
-                        UserCommunication.DisplayContacts();
+                    case (int)Option.Display:
+                        Contacts.DisplayContacts();
                         break;
-                    case 3:
-                        UserCommunication.DeleteContact();
+                    case (int)Option.Delete:
+                        Contacts.DeleteContact();
                         break;
-                    case 4:
-                        UserCommunication.EditContact();
+                    case (int)Option.Edit:
+                        Contacts.EditContact();
                         break;
-                    case 5:
-                        UserCommunication.SearchContact();
+                    case (int)Option.Search:
+                        Contacts.SearchContact();
                         break;
-                    case 6:
-                        UserCommunication.DisplayInSortedOrder();
+                    case (int)Option.DisplaySorted:
+                        Contacts.DisplayInSortedOrder();
                         break;
-                    case 7:
+                    case (int)Option.Exit:
                         IsRunning = false;
                         break;
                     default:
@@ -51,7 +51,6 @@ class MainContactManager
             {
                 Console.WriteLine("[-] Enter a Valid Choice as numbber ");
             }
-
         }
         Console.WriteLine("Thank You !!");
         Console.ReadKey();

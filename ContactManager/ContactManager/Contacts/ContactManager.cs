@@ -112,14 +112,14 @@ public class ContactManager
     /// Gets a string[name or phone_number or emailId] as Input and searches for the contact in <see cref="_contactList"/>
     /// </summary>
     /// <param name="stringToSearch">Any PhoneNumber or name or EmailId</param>
-    public string SearchContact(string stringToSearch)
+    public Contact SearchContact(string stringToSearch)
     {
         Contact person = _contactList.FirstOrDefault(i => i.PhoneNumber == stringToSearch
                         || i.Name.Equals(stringToSearch, StringComparison.OrdinalIgnoreCase) 
                         || i.EmailId.Equals(stringToSearch, StringComparison.OrdinalIgnoreCase));
         if (person != null)
         {
-            return($"{person}");
+            return(person);
         }
         else
         {
@@ -156,14 +156,6 @@ public class ContactManager
     public bool IsContactPresent(string name)
     {
         Contact person = _contactList.FirstOrDefault(i => i.Name == name);
-        if (person != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return person != null;
     }
 }

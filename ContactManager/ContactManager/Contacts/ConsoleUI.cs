@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace ContactManager.Contacts;
 
 /// <summary>
-/// The ConsoleUI class is with wich the user interacts.
+/// The ConsoleUI class is with wich the user interacts in console.
 /// </summary>
 public class ConsoleUI
 {   
@@ -46,8 +47,6 @@ public class ConsoleUI
             Console.WriteLine("Cannot Convert to Integer");
             return 0;
         }
-
-
     }
 
     /// <summary>
@@ -55,26 +54,25 @@ public class ConsoleUI
     /// </summary>
     public void AddContact()
     {
-        Console.Write("Enter Name :");
-        string name = Console.ReadLine();
-
-        Console.Write("Enter Phone number :");
-        string phoneNumber = Console.ReadLine();
+        string name = GetName();
+        if (String.IsNullOrWhiteSpace(name) || String.IsNullOrEmpty(name))
+        {
+            Console.WriteLine("[-] Name Cannot be Empty");
+            return;
+        }
+        string phoneNumber = GetPhoneNumber();
         if (!_validator.IsValidPhoneNumber(phoneNumber))
         {
             Console.WriteLine("[-] Invalid Number");
             return;
         }
-        Console.Write("Enter Email ID :");
-        string emailId = Console.ReadLine();
+        string emailId = GetEmailId();
         if (!_validator.IsValidEmail(emailId))
         {
             Console.WriteLine("\n[-] Invalid Email");
             return;
         }
-        Console.WriteLine("Enter the notes you want to add :");
-        string notes = Console.ReadLine();
-
+        string notes = GetNotes();
         _contactManager.AddContact(name, phoneNumber, emailId, notes);
     }
 
@@ -85,7 +83,7 @@ public class ConsoleUI
     {
         try
         {
-            Console.Write("Enter the Contacts name that you want to Delete");
+            Console.Write("Enter the Contacts name that you want to Delete :");
             string name = Console.ReadLine();
             _contactManager.RemoveContact(name);
             Console.WriteLine("\n[+] Contact Deleted Successfully");
@@ -94,9 +92,8 @@ public class ConsoleUI
         {
             Console.WriteLine("\n[-] Contact Not Found");
         }
-        
-
     }
+
     /// <summary>
     /// Gets the name from the user to update a contact
     /// </summary>
@@ -136,16 +133,18 @@ public class ConsoleUI
     {
         try
         {
-            Console.Write("Type to Search Contact :");
+            Console.Write("Type [Name or phoneNumber or EmailId] to Search Contact :");
             var stringToSearch = Console.ReadLine();
-            string searchedContact = _contactManager.SearchContact(stringToSearch);
-            Console.WriteLine(searchedContact);
+            Contact searchedContact = _contactManager.SearchContact(stringToSearch);
+            Console.WriteLine($" name = {searchedContact.Name} ; " +
+                $"number = {searchedContact.PhoneNumber} ; " +
+                $"EmailId = {searchedContact.EmailId}; " +
+                $"Notes : {searchedContact.Notes}");
         }
         catch(Exception ex)
         {
             Console.WriteLine($"Contact with details {ex.Message} Not Found.");
         }
-        
     }
     /// <summary>
     /// Displays Contacts held by <see cref="ContactManager"/>
@@ -184,7 +183,28 @@ public class ConsoleUI
             Console.WriteLine("[-] No Contacts Found!!");
         }
     }
-
-
-
+    private string GetName()
+    {
+        Console.Write("Enter Name :");
+        string name = Console.ReadLine();
+        return name;
+    }
+    private string GetPhoneNumber()
+    {
+        Console.Write("Enter PhoneNumber :");
+        string phoneNumber = Console.ReadLine();
+        return phoneNumber;
+    }
+    private string GetEmailId()
+    {
+        Console.Write("Enter EmailId :");
+        string emailId = Console.ReadLine();
+        return emailId;
+    }
+    private string GetNotes()
+    {
+        Console.Write("Enter Notes :");
+        string notes = Console.ReadLine();
+        return notes;
+    }
 }
