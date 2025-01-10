@@ -1,13 +1,17 @@
 ﻿namespace OOPs.ShapeHierarchy;
 
-
 /// <summary>
 /// This class Shape creates a Contract for the derived or child classes to follow.
 /// </summary>
 public abstract class Shape
 {
-    public abstract string Colour { get; set; }
+    public string Colour { get; set; }
     public abstract double CalculateArea();
+
+    public Shape(string colour)
+    {
+        Colour = colour;
+    }
     public void PrintDetails()
     {
         Console.WriteLine($"Colour : {Colour}, Area :{CalculateArea()}");
@@ -20,7 +24,6 @@ public abstract class Shape
 /// </summary>
 public class Rectangle : Shape
 {
-    public override string Colour { get; set; }
     private readonly string _shapeType = "Rectangle";
     public int Length { get; set; }
     public int Width { get; set; }
@@ -31,12 +34,10 @@ public class Rectangle : Shape
     /// <param name="colour">Colour of the Shape</param>
     /// <param name="length">Length of the Rectangle</param>
     /// <param name="width">Width of the Rectangle.</param>
-    public Rectangle(string colour, int length, int width)
+    public Rectangle(string colour,int length, int width) : base(colour)
     {
-        Colour = colour;
         Length = length;
         Width = width;
-
     }
     /// <summary>
     /// Calculates the Area of a Rectangle.
@@ -60,19 +61,15 @@ public class Rectangle : Shape
 /// </summary>
 public class Circle : Shape
 {
-
-    public override string Colour { get; set; }
     private readonly string _shapeType = "Circle";
-
     private double _radius;
-
     private const double Pi = Math.PI;
 
-    public Circle(string colour, double radius)
+    public Circle(string colour, double radius) : base(colour) 
     {
-        Colour = colour;
         _radius = radius;
     }
+
     /// <summary>
     /// Calculates the Area of a Circle.
     /// </summary>
@@ -90,5 +87,4 @@ public class Circle : Shape
         Console.WriteLine($"Colour : {Colour}, ShapeType : {_shapeType} ,Area :{CalculateArea()}");
 
     }
-
 }
