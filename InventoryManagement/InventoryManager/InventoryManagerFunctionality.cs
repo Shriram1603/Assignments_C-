@@ -3,13 +3,13 @@ namespace InventoryManagement.InventoryManager;
 
 public class InventoryManager
 {
-    private List<Product> products = new List<Product>();
+    private List<Product> _products = new List<Product>();
 
     public void Add(string Name, double Price, int Quantity)
-    {   Product item = products.FirstOrDefault(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+    {   Product item = _products.FirstOrDefault(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
         if(item == null)
         {
-            products.Add(new Product(Name, Price, Quantity));
+            _products.Add(new Product(Name, Price, Quantity));
             Console.WriteLine("[+] Product Added !!");
         }
         else
@@ -30,9 +30,9 @@ public class InventoryManager
 
     public void Remove(string Name)
     {
-        if (products.Any(i => i.Product_Name.Equals(Name,StringComparison.OrdinalIgnoreCase)))
+        if (_products.Any(i => i.Product_Name.Equals(Name,StringComparison.OrdinalIgnoreCase)))
         {
-            products.RemoveAll(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+            _products.RemoveAll(i => i.Product_Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
         }
         else
         {
@@ -43,9 +43,9 @@ public class InventoryManager
     public void DisplayProducts()
     {
         int Serial_no = 1;
-        if (products.Count > 0)
+        if (_products.Count > 0)
         {
-            foreach (var product in products)
+            foreach (var product in _products)
             {
                 Console.WriteLine($"{Serial_no}. {product}");
             }
