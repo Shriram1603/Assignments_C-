@@ -1,45 +1,45 @@
 ﻿
-using ContactManager.Contacts;
+using SolitonTechnologies.Contacts;
 
 /// <summary>
-/// The main class is responsible for running the contact application.
+/// The <see cref="Program"/> class is responsible for running the contact application.
 /// </summary>
-class MainClass
+class Program
 {
     static void Main()
     {
         Console.WriteLine("\t \t Contact Manager App ");
 
         ContactValidator validator = new ContactValidator();
-        ContactManager.Contacts.ContactManager Contacts_manager = new ContactManager.Contacts.ContactManager(validator);
-        ConsoleUI Contacts = new ConsoleUI(Contacts_manager, validator);
+        ContactManager cntactsMnager = new ContactManager(validator);
+        ConsoleUI Contacts = new ConsoleUI(cntactsMnager, validator);
         bool IsRunning = true;
         while (IsRunning)
         {
             try
             {
-                int userChoice = Contacts.ShowMenu();
+                UserChoice userChoice = (UserChoice)Contacts.ShowMenu();
                 switch (userChoice)
                 {
-                    case (int)Option.Add:
+                    case UserChoice.Add:
                         Contacts.AddContact();
                         break;
-                    case (int)Option.Display:
+                    case UserChoice.Display:
                         Contacts.DisplayContacts();
                         break;
-                    case (int)Option.Delete:
+                    case UserChoice.Delete:
                         Contacts.DeleteContact();
                         break;
-                    case (int)Option.Edit:
+                    case UserChoice.Edit:
                         Contacts.EditContact();
                         break;
-                    case (int)Option.Search:
+                    case UserChoice.Search:
                         Contacts.SearchContact();
                         break;
-                    case (int)Option.DisplaySorted:
+                    case UserChoice.DisplaySorted:
                         Contacts.DisplayInSortedOrder();
                         break;
-                    case (int)Option.Exit:
+                    case UserChoice.Exit:
                         IsRunning = false;
                         break;
                     default:

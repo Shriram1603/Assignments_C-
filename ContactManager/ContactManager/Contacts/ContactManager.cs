@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-namespace ContactManager.Contacts;
+namespace SolitonTechnologies.Contacts;
 
 /// <summary>
 /// This class performs the actual CRUD, search and sorted_display functionalities;
@@ -84,7 +84,7 @@ public class ContactManager
     {   
         IList<string> message = new List<string>();
         Contact person = _contactList.FirstOrDefault(i => i.Name == name);
-        person.Name = String.IsNullOrEmpty(nameToUpdate) ? person.Name : nameToUpdate;
+        person.Name = _validator.IsValidName(name) ? person.Name : nameToUpdate;
         if (person.Name != nameToUpdate)
         {
             message.Add("\n[-] Empty Name - No changes Occured");
@@ -99,13 +99,12 @@ public class ContactManager
         person.EmailId = !String.IsNullOrEmpty(emailId) 
                       || !String.IsNullOrWhiteSpace(emailId)
                       && _validator.IsValidEmail(emailId) ? emailId : person.EmailId;
-        
+ 
         if (emailId != person.EmailId)
         {
             message.Add("\n[-] Empty or Invalid Email_Id - No changes Occured");
         }
         return message;
-        
     }
 
     /// <summary>
@@ -124,6 +123,7 @@ public class ContactManager
         else
         {
             throw new ArgumentException(stringToSearch);
+            
         }
     }
 
@@ -131,16 +131,16 @@ public class ContactManager
     /// Displays the <see cref="_contactList"/> in a sortedby(name) ascending order.
     /// </summary>
     /// <returns>List of All Contacts with Details</returns>
-    public List<string> ShowInSortedDisplay()
+    public IList<string> SortedContacts()
     {
-        List<string> contactListCopy = new List<string>();
+        IList<string> sortedContacts = new List<string>();
         if (_contactList.Count > 0)
         {
             foreach (Contact person in _contactList.OrderBy(p => p.Name))
             {
-                contactListCopy.Add($"{person}");
+                sortedContacts.Add($"{person}");
             }
-            return contactListCopy;
+            return sortedContacts;
         }
         else
         {

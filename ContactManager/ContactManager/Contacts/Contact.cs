@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactManager.Contacts;
+namespace SolitonTechnologies.Contacts;
 
 /// <summary>
 /// The Contact class holds an individual's name, phone number, and email ID.

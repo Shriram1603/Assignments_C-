@@ -1,4 +1,4 @@
-﻿namespace ContactManager.Contacts;
+﻿namespace SolitonTechnologies.Contacts;
 
 /// <summary>
 /// Validator class to validate phone number and emailId
@@ -11,6 +11,8 @@ public class ContactValidator
     /// <param name="email">Contacts emailId</param>
     /// <returns>True if Valid. False if Invalid.</returns>
     public bool IsValidEmail(string email) => email.Contains("@") && email.Substring(email.Length - 4) == ".com";
+
+    public bool IsValidName(string name) => String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name);
 
     /// <summary>
     /// Validates PhoneNumber by checking if the length of the the phone number is exactly 10 and contains only digits

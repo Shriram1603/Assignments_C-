@@ -1,7 +1,8 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace ContactManager.Contacts;
+namespace SolitonTechnologies.Contacts;
 
 /// <summary>
 /// The ConsoleUI class is with wich the user interacts in console.
@@ -55,7 +56,7 @@ public class ConsoleUI
     public void AddContact()
     {
         string name = GetName();
-        if (String.IsNullOrWhiteSpace(name) || String.IsNullOrEmpty(name))
+        if (_validator.IsValidName(name))
         {
             Console.WriteLine("[-] Name Cannot be Empty");
             return;
@@ -173,7 +174,7 @@ public class ConsoleUI
     {
         try
         {
-            List<string> contactList = _contactManager.ShowInSortedDisplay();
+            IList<string> contactList = _contactManager.SortedContacts();
             foreach(string contact in contactList)
             {
                 Console.WriteLine(contact);
