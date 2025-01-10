@@ -15,7 +15,7 @@ public class ContactValidator
     /// <summary>
     /// Validates PhoneNumber by checking if the length of the the phone number is exactly 10 and contains only digits
     /// </summary>
-    /// <param name="phone_number">Contacts phone number</param>
+    /// <param name="phoneNumber">Contacts phone number</param>
     /// <returns>True if Valid. False if Invalid.</returns>
-    public bool IsValidPhoneNumber(string phone_number) => phone_number.Length == 10 && phone_number.All(Char.IsDigit);
+    public bool IsValidPhoneNumber(string phoneNumber) => phoneNumber.Length == 10 && phoneNumber.All(Char.IsDigit);
 }
