@@ -83,7 +83,7 @@ public class ConsoleUI
     {
         try
         {
-            Console.Write("Enter the Contacts name that you want to Delete :");
+            Console.Write("Enter the Contact's name that you want to Delete :");
             string name = Console.ReadLine();
             _contactManager.RemoveContact(name);
             Console.WriteLine("\n[+] Contact Deleted Successfully");
