@@ -19,6 +19,7 @@ public class BankAccount
         _accountNumber = accountNumber;
         _balance = balance;
     }
+
     /// <summary>
     /// Deposits or adds the amount to the existing balance.
     /// </summary>
@@ -30,9 +31,9 @@ public class BankAccount
     }
 
     /// <summary>
-    /// Virtual method to be overridden in SavingsAccount and CheckingAccount
+    /// Method to withdraw amount from <see cref="BankAccount"/>
     /// </summary>
-    /// <param name="amount">Money to be taken or Subtracted from balance</param>
+    /// <param name="amount">Money to be taken or subtracted from balance</param>
     public void WithDraw(decimal amount) {
         if (amount > _balance) 
         {
@@ -90,14 +91,14 @@ public class CheckingAccount : BankAccount
     /// <summary>
     /// Constuctor of <see cref="SavingsAccount"/> ; calls base constructor <see cref="BankAccount"/>
     /// </summary>
-    /// <param name="accountNumber">Customer's Account Number.</param>
-    /// <param name="balance">Customer' Balance Amount.</param>
+    /// <param name="accountNumber">Customer's account number.</param>
+    /// <param name="balance">Customer's balance amount.</param>
     public CheckingAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
 
     /// <summary>
     /// WithDraw method of <see cref="CheckingAccount"/> which remove restriction in withdrawing.
     /// </summary>
-    /// <param name="amount">Money to be taken or Subtracted from balance</param>
+    /// <param name="amount">Money to be taken or subtracted from <see cref="BankAccount._balance"/></param>
     public new void WithDraw(decimal amount) 
     {    
         _balance -= amount;

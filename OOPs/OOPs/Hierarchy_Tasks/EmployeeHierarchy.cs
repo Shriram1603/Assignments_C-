@@ -22,7 +22,7 @@ public abstract class Employee
     }
 
     /// <summary>
-    /// Abstract metho to be overridden by child classes
+    /// Abstract method to be overridden by child classes
     /// </summary>
     /// <returns>integer</returns>
     public abstract int CalculateBonus();
@@ -37,7 +37,7 @@ public abstract class Employee
 }
 
 /// <summary>
-/// Class <see cref="Manager"/> which is of type Employee as it inherits from abstract <see cref="Employee"/> class.
+/// Class <see cref="Manager"/> which is of type employee as it inherits from abstract <see cref="Employee"/> class.
 /// </summary>
 public class Manager : Employee
 {
@@ -55,7 +55,7 @@ public class Manager : Employee
     }
 
     /// <summary>
-    /// Calculates a Random Bonus Amount for a Manager.
+    /// Calculates a random bonus amount for a manager.
     /// </summary>
     /// <returns>int Bonus</returns>
     public override int CalculateBonus()
@@ -84,7 +84,7 @@ public class Developer : Employee
     }
 
     /// <summary>
-    /// Calculates a Random Bonus Amount for a Developer.
+    /// Calculates a random bonus amount for a developer.
     /// </summary>
     /// <returns>int Bonus</returns>
     public override int CalculateBonus() {
