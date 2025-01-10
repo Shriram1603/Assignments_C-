@@ -1,56 +1,52 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-
 namespace ContactManager.Contacts;
 
 /// <summary>
-/// This Class Performs the actual Add, delete, update, Display, validation, search and Sorted Search functionalities;
+/// This class performs the actual CRUD, search and sorted_display functionalities;
 /// </summary>
 public class ContactManager
-{   
-    private ContactValidator _Validator;
+{
+    private IList<Contact> _contactList = new List<Contact>();
+    private ContactValidator _validator;
+
     /// <summary>
-    /// Dependency/Object Insertion
+    /// Constructor of <see cref="ContactManager"/>
     /// </summary>
-    /// <param name="validator">EmailId_PhoneNumber_Validator</param>
+    /// <param name="validator">Contact_Validator<see cref="ContactValidator"/></param>
     public ContactManager(ContactValidator validator)
     {
-        _Validator = validator;
+        _validator = validator;
     }
 
     /// <summary>
-    /// Make list private to expose only methods (Abstraction & Encapsulation)
-    /// </summary>
-    private IList<Contact> contactList = new List<Contact>();
-
-    /// <summary>
-    /// Creates the Contact Class Instance with the provided data and adds it to the ContactList.
+    /// Creates the contact class instance with the provided data and adds it to the <see cref="_contactList"/>.
     /// </summary>
     /// <param name="name">ContactName</param>
-    /// <param name="phone_number">contact's_phone_number</param>
+    /// <param name="phoneNumber">contact's_phone_number</param>
     /// <param name="emailId">Contact's EmailID</param>
     /// <param name="notes">Notes</param>
-    public void AddItem(string name, string phone_number, string emailId, string notes)
+    public void AddContact(string name, string phoneNumber, string emailId, string notes)
     {
-        contactList.Add(new Contact(name, phone_number, emailId, notes));
+        _contactList.Add(new Contact(name, phoneNumber, emailId, notes));
     }
 
     /// <summary>
-    /// Displays all the Saved Contacts in the ContactList.
+    /// Displays all the saved contacts in the <see cref="_contactList"/>.
     /// </summary>
     /// <exception cref="ArgumentException">No Contacts Found</exception>
-    public IList<string> Display()
+    public IList<string> DisplayContacts()
     {   
-        IList<string> ContactListCopy = new List<string>();
+        IList<string> contactListCopy = new List<string>();
         
-        if (contactList.Count != 0)
+        if (_contactList.Count != 0)
         {
-            int Serial_no = 1;
-            foreach (Contact person in contactList)
+            int serialNumber = 1;
+            foreach (Contact person in _contactList)
             {
-                ContactListCopy.Add($"{Serial_no}. {person}");
-                Serial_no++;
+                contactListCopy.Add($"{serialNumber}. {person}");
+                serialNumber++;
             }
-            return ContactListCopy;
+            return contactListCopy;
         }
         else
         {
@@ -59,15 +55,15 @@ public class ContactManager
     }
 
     /// <summary>
-    /// Removes the Contact form the ContactList base on the Name of the contact passed to it.
+    /// Removes the contact form the <see cref="_contactList"/> based on the name of the contact passed to it.
     /// </summary>
-    /// <param name="Name">Contact's Name</param>
-    /// <exception cref="ArgumentException">Contact Not Found.</exception>
-    public void Remove(string Name)
+    /// <param name="name">Contact's name</param>
+    /// <exception cref="ArgumentException">Contact not found.</exception>
+    public void RemoveContact(string name)
     {
-        if (contactList.Any(i => i.Name == Name))
-        {   Contact contact = contactList.First(i => i.Name == Name);
-            contactList.Remove(contact);   
+        if (_contactList.Any(i => i.Name == name))
+        {   Contact contact = _contactList.First(i => i.Name == name);
+            _contactList.Remove(contact);   
         }
         else
         {
@@ -77,95 +73,89 @@ public class ContactManager
     }
 
     /// <summary>
-    /// Finds a specified contact & prompts users to type in Updated values for each field [Name, Phone Number,EmailID]
+    /// Finds a specified contactact in <see cref="_contactList"/> and update the contact based on the provided params
     /// </summary>
     /// <returns> A List of String Containing the Change report</returns>
     /// <param name="name">Contact's Name</param>
-    /// <param name="email">Email to be updates</param>
-    /// <param name="NameToUpdate">Name to be Updated</param>
-    /// <param name="phn_number">PhoneNumber to be updated</param>
-    public IList<string> Update(string name,string NameToUpdate, string phn_number, string email)
+    /// <param name="emailId">Email to be updates</param>
+    /// <param name="nameToUpdate">Name to be Updated</param>
+    /// <param name="phoneNumber">PhoneNumber to be updated</param>
+    public IList<string> UpdateContact(string name,string nameToUpdate, string phoneNumber, string emailId)
     {   
-        IList<string> Message = new List<string>();
-        Contact person = contactList.FirstOrDefault(i => i.Name == name);
+        IList<string> message = new List<string>();
+        Contact person = _contactList.FirstOrDefault(i => i.Name == name);
+        person.Name = String.IsNullOrEmpty(nameToUpdate) ? person.Name : nameToUpdate;
+        if (person.Name != nameToUpdate)
+        {
+            message.Add("\n[-] Empty Name - No changes Occured");
+        }
+        person.PhoneNumber = !String.IsNullOrEmpty(phoneNumber)
+                           || !String.IsNullOrWhiteSpace(phoneNumber)
+                           && _validator.IsValidPhoneNumber(phoneNumber) ? phoneNumber : person.PhoneNumber;
+        if (person.PhoneNumber != phoneNumber)
+        {
+            message.Add("\n[-] Invalid or Empty phone number - No changes Occured");
+        }
+        person.EmailId = !String.IsNullOrEmpty(emailId) 
+                      || !String.IsNullOrWhiteSpace(emailId)
+                      && _validator.IsValidEmail(emailId) ? emailId : person.EmailId;
         
-        person.Name = String.IsNullOrEmpty(NameToUpdate) ? person.Name : NameToUpdate;
-        if (person.Name != NameToUpdate)
+        if (emailId != person.EmailId)
         {
-            Message.Add("\n[-] Empty Name - No changes Occured");
+            message.Add("\n[-] Empty or Invalid Email_Id - No changes Occured");
         }
-
-        person.Phone_number = !String.IsNullOrEmpty(phn_number)
-                           || !String.IsNullOrWhiteSpace(phn_number)
-                           && _Validator.IsValidPhoneNumber(phn_number) ? phn_number : person.Phone_number;
-        if (person.Phone_number != phn_number)
-        {
-            Message.Add("\n[-] Invalid or Empty phone number - No changes Occured");
-        }
-        person.EmailId = !String.IsNullOrEmpty(email) 
-                      || !String.IsNullOrWhiteSpace(email)
-                      && _Validator.IsValidEmail(email) ? email : person.EmailId;
-        
-        if (email != person.EmailId)
-        {
-            Message.Add("\n[-] Empty or Invalid Email_Id - No changes Occured");
-        }
-        return Message;
+        return message;
         
     }
 
-
-
     /// <summary>
-    /// Gets a string[Name or Phone_Number or EmailId] as Input and searches for the Contact
+    /// Gets a string[name or phone_number or emailId] as Input and searches for the contact in <see cref="_contactList"/>
     /// </summary>
-    /// <param name="item">Any PhoneNumber or name or EmailId</param>
-    public string Search(string item)
+    /// <param name="stringToSearch">Any PhoneNumber or name or EmailId</param>
+    public string SearchContact(string stringToSearch)
     {
-        Contact Person = contactList.FirstOrDefault(i => i.Phone_number == item
-                        || i.Name.Equals(item, StringComparison.OrdinalIgnoreCase) 
-                        || i.EmailId.Equals(item, StringComparison.OrdinalIgnoreCase));
-
-        if (Person != null)
+        Contact person = _contactList.FirstOrDefault(i => i.PhoneNumber == stringToSearch
+                        || i.Name.Equals(stringToSearch, StringComparison.OrdinalIgnoreCase) 
+                        || i.EmailId.Equals(stringToSearch, StringComparison.OrdinalIgnoreCase));
+        if (person != null)
         {
-            return($"{Person}");
+            return($"{person}");
         }
         else
         {
-            throw new ArgumentException(item);
+            throw new ArgumentException(stringToSearch);
         }
-
-
     }
+
     /// <summary>
-    /// Displays the ContactList in a Sortedby(Name) ascending order.
+    /// Displays the <see cref="_contactList"/> in a sortedby(name) ascending order.
     /// </summary>
     /// <returns>List of All Contacts with Details</returns>
-    public List<string> SortedDisplay()
+    public List<string> ShowInSortedDisplay()
     {
-        List<string> ContactListCopy = new List<string>();
-        if (contactList.Count > 0)
+        List<string> contactListCopy = new List<string>();
+        if (_contactList.Count > 0)
         {
-            foreach (Contact person in contactList.OrderBy(p => p.Name))
+            foreach (Contact person in _contactList.OrderBy(p => p.Name))
             {
-                ContactListCopy.Add($"{person}");
+                contactListCopy.Add($"{person}");
             }
-            return ContactListCopy;
+            return contactListCopy;
         }
         else
         {
             throw new ArgumentException();
         }
-        
     }
+
     /// <summary>
-    /// 
+    /// Checks if contact is present in the <see cref="_contactList"/>
     /// </summary>
     /// <param name="name">Contact's Name</param>
     /// <returns>True if Contact is Found and flase if otherwise.</returns>
     public bool IsContactPresent(string name)
     {
-        Contact person = contactList.FirstOrDefault(i => i.Name == name);
+        Contact person = _contactList.FirstOrDefault(i => i.Name == name);
         if (person != null)
         {
             return true;

@@ -3,19 +3,18 @@
 namespace ContactManager.Contacts;
 
 /// <summary>
-/// The ConsoleInterface Class is with wich the user interacts
+/// The ConsoleUI class is with wich the user interacts.
 /// </summary>
 public class ConsoleUI
 {   
-    
     private ContactManager _ContactManager;
     private ContactValidator _Validator;
 
     /// <summary>
-    /// Dependency Injection Through Contructor of ConsoleInterface Class.
+    /// Dependency injection through contructor of <see cref="ConsoleUI"/>.
     /// </summary>
-    /// <param name="Manager">Object of Type BaseContactManager </param>
-    /// <param name="validator">Object of Type EmailId_PhoneNumber_Validator</param>
+    /// <param name="Manager">Object of type BaseContactManager </param>
+    /// <param name="validator">Object of type EmailId_PhoneNumber_Validator</param>
     public ConsoleUI(ContactManager Manager, ContactValidator validator)
     {
         _ContactManager = Manager;
@@ -23,15 +22,22 @@ public class ConsoleUI
     }
 
     /// <summary>
-    /// Displays a Menu With List of operations available and promts user for a Choice
+    /// Displays a menu with list of operations available and promts user for a choice
     /// </summary>
-    /// <returns> Input of User as integer value</returns>
-    public int Menu()
+    /// <returns> Input of user as integer value</returns>
+    public int ShowMenu()
     {
-        Console.WriteLine("\nEnter the Operation You want to perform: \n [1] - Add Contact \n [2] - Display Contacts \n [3] - Delete \n [4] - Update \n [5] - exit \n [6] - Search \n [7] - Sorted View\n");
-        var UserInput = Console.ReadLine();
+        Console.WriteLine("\nEnter the Operation You want to perform: " +
+                          "\n [1] - Add Contact " +
+                          "\n [2] - Display Contacts " +
+                          "\n [3] - Delete " +
+                          "\n [4] - Update " +
+                          "\n [5] - Search " +
+                          "\n [6] - Sorted View " +
+                          "\n [7] - exit\n");
+        var userInput = Console.ReadLine();
         int userChoice;
-        if (int.TryParse(UserInput, out userChoice))
+        if (int.TryParse(userInput, out userChoice))
         {
             return userChoice;
         }
@@ -45,15 +51,15 @@ public class ConsoleUI
     }
 
     /// <summary>
-    /// Gets the required data from the user to ADD/SAVE a Contact
+    /// Gets the required data from the user to add/save a contact
     /// </summary>
-    public void AddUser()
+    public void AddContact()
     {
         Console.WriteLine("Enter Name :");
         string name = Console.ReadLine();
         Console.WriteLine("Enter Phone number :");
-        string phone_number = Console.ReadLine();
-        if (!_Validator.IsValidPhoneNumber(phone_number))
+        string phoneNumber = Console.ReadLine();
+        if (!_Validator.IsValidPhoneNumber(phoneNumber))
         {
             Console.WriteLine("[-] Invalid Number");
             return;
@@ -68,20 +74,20 @@ public class ConsoleUI
         Console.WriteLine("Enter the notes you want to add :");
         string notes = Console.ReadLine();
 
-        _ContactManager.AddItem(name, phone_number, emailId, notes);
+        _ContactManager.AddContact(name, phoneNumber, emailId, notes);
 
     }
 
     /// <summary>
-    /// Gets the name from the user to DELETE a Contact
+    /// Gets the name from the user to delete a contact
     /// </summary>
-    public void Delete()
+    public void DeleteContact()
     {
         try
         {
             Console.WriteLine("Enter the Contacts name that you want to Delete");
-            string item = Console.ReadLine();
-            _ContactManager.Remove(item);
+            string name = Console.ReadLine();
+            _ContactManager.RemoveContact(name);
             Console.WriteLine("\n[+] Contact Deleted Successfully");
         }
         catch 
@@ -92,9 +98,9 @@ public class ConsoleUI
 
     }
     /// <summary>
-    /// Gets the name from the user to UPDATE a Contact
+    /// Gets the name from the user to update a contact
     /// </summary>
-    public void Edit()
+    public void EditContact()
     {
         Console.WriteLine("Enter the name of the contact You want to update :");
         string name = Console.ReadLine();
@@ -103,12 +109,12 @@ public class ConsoleUI
             Console.WriteLine($"\n[+] Updating Contact of {name}");
             Console.WriteLine("\nif you don't want to update a particular field leave it blank (just press enter) \n");
             Console.WriteLine("\nEnter the name to update: ");
-            string NameToUpdate = Console.ReadLine();
+            string nameToUpdate = Console.ReadLine();
             Console.WriteLine("\nEnter the number to update : ");
-            string phn_number = Console.ReadLine();
+            string phoneNumber = Console.ReadLine();
             Console.WriteLine("Enter the email to be updated :");
-            string email = Console.ReadLine();
-            IList<string> Message = _ContactManager.Update(name,NameToUpdate,phn_number,email);
+            string emailId = Console.ReadLine();
+            IList<string> Message = _ContactManager.UpdateContact(name,nameToUpdate,phoneNumber,emailId);
             foreach (string message in Message)
             {
                 Console.WriteLine(message);
@@ -120,16 +126,16 @@ public class ConsoleUI
         }
     }
     /// <summary>
-    /// Gets one of the types [Name, Phone_number, Email_Id ] to search for that contact
+    /// Gets one of the types [name, phone_number, email_id ] to search for that contact
     /// </summary>
-    public void Search()
+    public void SearchContact()
     {
         try
         {
             Console.WriteLine("Type to Search Contact :");
-            var item = Console.ReadLine();
-            string SearchedItem = _ContactManager.Search(item);
-            Console.WriteLine(SearchedItem);
+            var stringToSearch = Console.ReadLine();
+            string searchedItem = _ContactManager.SearchContact(stringToSearch);
+            Console.WriteLine(searchedItem);
         }
         catch(Exception ex)
         {
@@ -145,7 +151,7 @@ public class ConsoleUI
         try
         {
             Console.WriteLine("Your saved Contacts :");
-            IList<string> ContactList =  _ContactManager.Display();
+            IList<string> ContactList =  _ContactManager.DisplayContacts();
             foreach (string contact in ContactList)
             {
                 Console.WriteLine($"\t {contact}");
@@ -157,13 +163,13 @@ public class ConsoleUI
         }
      }
     /// <summary>
-    /// Displays The List of Contacts in Sorted order [Sorted By Name]
+    /// Displays the list of contacts in sorted order [sorted by name]
     /// </summary>
-    public void SortedSearch()
+    public void DisplayInSortedOrder()
     {
         try
         {
-            List<string> ContactList = _ContactManager.SortedDisplay();
+            List<string> ContactList = _ContactManager.ShowInSortedDisplay();
             foreach(string contact in ContactList)
             {
                 Console.WriteLine(contact);
