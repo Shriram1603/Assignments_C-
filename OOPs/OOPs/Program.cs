@@ -2,6 +2,9 @@
 using OOPs.ShapeHierarchy;
 using OOPs.BankingSystem;
 
+/// <summary>
+/// <see cref="MyProgram"/> acts as the entry point as it holds main().
+/// </summary>
 public class MyProgram
 {
     static void Main()
