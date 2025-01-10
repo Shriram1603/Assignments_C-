@@ -2,98 +2,104 @@
 
 
 /// <summary>
-/// Class Describes the implementation of BankAccount
+/// Class describes the implementation of <see cref="BankAccount"/>
 /// </summary>
 public class BankAccount
 {
-    protected string _Account_Number {  get; set; }
+    protected string _accountNumber {  get; set; }
     protected decimal _balance { get; set; }
 
     /// <summary>
-    /// Contructor Of BankAccount Class.
+    /// Contructor Of <see cref="BankAccount"/> class.
     /// </summary>
-    /// <param name="accountNumber">Account Number of the BankAccount.</param>
-    /// <param name="balance">Initial Ammount Deposited In the Account. </param>
+    /// <param name="accountNumber">Account number of the <see cref="BankAccount"/>.</param>
+    /// <param name="balance">Initial ammount aeposited in the <see cref="BankAccount"/>. </param>
     public BankAccount(string accountNumber, decimal balance)
     {
-        _Account_Number = accountNumber;
+        _accountNumber = accountNumber;
         _balance = balance;
     }
     /// <summary>
     /// Deposits or adds the amount to the existing balance.
     /// </summary>
-    /// <param name="amount">Money to be added to the Balance</param>
+    /// <param name="amount">Money to be added to the <see cref="BankAccount._balance"/></param>
     public void Deposit(decimal amount)
     {
         _balance = _balance + amount;
-        Console.WriteLine($"\n {amount} Deposited.\nCurrent Balance = {_balance} ");
+        Console.WriteLine($"\t {amount} Deposited.\tCurrent Balance = {_balance} ");
     }
 
     /// <summary>
     /// Virtual method to be overridden in SavingsAccount and CheckingAccount
     /// </summary>
     /// <param name="amount">Money to be taken or Subtracted from balance</param>
-    public virtual void WithDraw(decimal amount) {
+    public void WithDraw(decimal amount) {
         if (amount > _balance) 
         {
-            Console.WriteLine("Insufficient Funds in Account");
+            Console.WriteLine("\tInsufficient Funds in Account");
         }
         else 
         {
             _balance -= amount;
-            Console.WriteLine($"\n{amount} WithDrawn.\nCurrent Balance = {_balance}");
+            Console.WriteLine($"\t{amount} WithDrawn.\tCurrent Balance = {_balance}");
         }
      }
-
 }
 
 /// <summary>
-/// Class of type BankAccount specifically for Savings Account.
+/// Class of type <see cref="BankAccount"/> specifically for <see cref="SavingsAccount"/>.
 /// </summary>
 public class SavingsAccount : BankAccount
 {
-    private const int Minimum_Balance = 5000;
-    public SavingsAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
+    private const int _minimumBalance = 5000;
+
     /// <summary>
-    /// Overriding WithDraw Method to Set a Minimum amount to always maintain a set amount.
+    /// Constuctor of <see cref="SavingsAccount"/> ; calls base constructor <see cref="BankAccount"/>
+    /// </summary>
+    /// <param name="accountNumber"></param>
+    /// <param name="balance"></param>
+    public SavingsAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
+
+    /// <summary>
+    /// Withdraw method for savings account to set a minimum amount to always maintain a set amount.
     /// </summary>
     /// <param name="amount">Money to be taken or Subtracted from balance</param>
-    public override void WithDraw(decimal amount) {
-    
+    public new void WithDraw(decimal amount) 
+    {
         if (amount > _balance) 
         {
-            Console.WriteLine("Insufficient Funds in Account");
+            Console.WriteLine("\tInsufficient Funds in Account");
         }
-        else if(_balance - amount < Minimum_Balance)
+        else if(_balance - amount < _minimumBalance)
         {
-            Console.WriteLine($"Cannot Withdraw {amount}.\nMinimum Balance of {Minimum_Balance} must be maintained. \n Current Balance = {_balance}.");
+            Console.WriteLine($"\tCannot Withdraw {amount}.\tMinimum Balance of {_minimumBalance} must be maintained.\tCurrent Balance = {_balance}.");
         }
         else 
         {
             _balance = _balance - amount;
-            Console.WriteLine($"\n{amount} WithDrawn.\nCurrent Balance = {_balance}");
+            Console.WriteLine($"\t{amount} WithDrawn.\tCurrent Balance = {_balance}");
         }
     }
 }
 
 /// <summary>
-/// Class of type BankAccount specifically for Checking Account.
+/// Class of type <see cref="BankAccount"/> specifically for <see cref="CheckingAccount"/>.
 /// </summary>
 public class CheckingAccount : BankAccount
-{   
+{
     /// <summary>
-    /// 
+    /// Constuctor of <see cref="SavingsAccount"/> ; calls base constructor <see cref="BankAccount"/>
     /// </summary>
     /// <param name="accountNumber">Customer's Account Number.</param>
     /// <param name="balance">Customer' Balance Amount.</param>
     public CheckingAccount(string accountNumber, decimal balance) : base(accountNumber, balance) { }
 
     /// <summary>
-    /// Overriding WithDraw Method to Remove all restrictions when WithDrawing.
+    /// WithDraw method of <see cref="CheckingAccount"/> which remove restriction in withdrawing.
     /// </summary>
     /// <param name="amount">Money to be taken or Subtracted from balance</param>
-    public override void WithDraw(decimal amount) { 
-        
+    public new void WithDraw(decimal amount) 
+    {    
         _balance -= amount;
     }
 }

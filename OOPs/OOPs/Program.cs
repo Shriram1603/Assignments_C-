@@ -5,7 +5,7 @@ using OOPs.BankingSystem;
 public class MyProgram
 {
     static void Main()
-    {
+    {   
         //Shows the Working of ShapeHierarchy
         Console.WriteLine("\n[1] - task1 : ShapeHierarchy :");
         Rectangle rectangle = new Rectangle("Blue", 4, 7);
@@ -23,14 +23,14 @@ public class MyProgram
 
         //Shows the Working of BankingSystem
         Console.WriteLine("\n[3] - task3 : Banking System :");
-        BankAccount savingsAccount = new SavingsAccount("12345", 20000);
+        SavingsAccount savingsAccount = new SavingsAccount("12345", 20000);
         Console.WriteLine("\nSaving Account :");
         savingsAccount.WithDraw(10000);
         savingsAccount.WithDraw(10000);
         savingsAccount.Deposit(5000);
 
         Console.WriteLine("\nChecking Account :");
-        BankAccount checkingAccount = new CheckingAccount("123456", 20000);
+        CheckingAccount checkingAccount = new CheckingAccount("123456", 20000);
         checkingAccount.WithDraw(25000);
         checkingAccount.Deposit(4000);
 
