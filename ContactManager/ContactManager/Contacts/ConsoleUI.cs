@@ -146,6 +146,7 @@ public class ConsoleUI
             Console.WriteLine($"Contact with details {ex.Message} Not Found.");
         }
     }
+
     /// <summary>
     /// Displays Contacts held by <see cref="ContactManager"/>
     /// </summary>
@@ -183,24 +184,28 @@ public class ConsoleUI
             Console.WriteLine("[-] No Contacts Found!!");
         }
     }
+
     private string GetName()
     {
         Console.Write("Enter Name :");
         string name = Console.ReadLine();
         return name;
     }
+
     private string GetPhoneNumber()
     {
         Console.Write("Enter PhoneNumber :");
         string phoneNumber = Console.ReadLine();
         return phoneNumber;
     }
+
     private string GetEmailId()
     {
         Console.Write("Enter EmailId :");
         string emailId = Console.ReadLine();
         return emailId;
     }
+
     private string GetNotes()
     {
         Console.Write("Enter Notes :");
