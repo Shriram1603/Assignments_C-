@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventoryManagement.InventoryManager;
 
-public class InventoryManagementFunctionality
+public class InventoryManager
 {
     private List<Product> products = new List<Product>();
 

@@ -2,7 +2,7 @@
 
 using InventoryManagement.InventoryManager;
 
-InventoryManagementFunctionality Manager =new InventoryManagementFunctionality();
+InventoryManager Manager =new InventoryManager();
 UserCommunicationConsole Communication = new UserCommunicationConsole(Manager);
 
 while (true)

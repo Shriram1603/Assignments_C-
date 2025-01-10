@@ -3,9 +3,9 @@ using System;
 public class UserCommunicationConsole
 {
 
-    private InventoryManagementFunctionality Manager { get; set; }
+    private InventoryManager Manager { get; set; }
 
-    public UserCommunicationConsole(InventoryManagementFunctionality obj)
+    public UserCommunicationConsole(InventoryManager obj)
     {
 
         Manager = obj;
