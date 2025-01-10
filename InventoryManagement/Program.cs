@@ -2,20 +2,29 @@
 
 using InventoryManagement.InventoryManager;
 
-InventoryManager Manager =new InventoryManager();
-UserCommunicationConsole Communication = new UserCommunicationConsole(Manager);
-
-while (true)
+public class MainClass
 {
-    Communication.AddProduct();
-    Communication.Display();
-    Communication.AddProduct();
-    Communication.Display();
-    Communication.AddProduct();
-    Communication.Display();
-    Communication.RemoveProduct();
-    Communication.Display();
-    Communication.RemoveProduct();
-    Communication.Display();
+    static void Main()
+    {
+        InventoryManager Manager = new InventoryManager();
+        UserCommunicationConsole Inventory = new UserCommunicationConsole(Manager);
+
+        bool IsRunning = true;
+        while (IsRunning)
+        {
+            Inventory.AddProduct();
+            Inventory.Display();
+            Inventory.AddProduct();
+            Inventory.Display();
+            Inventory.AddProduct();
+            Inventory.Display();
+            Inventory.RemoveProduct();
+            Inventory.Display();
+            Inventory.RemoveProduct();
+            Inventory.Display();
+        }
+
+    }
 }
+
 

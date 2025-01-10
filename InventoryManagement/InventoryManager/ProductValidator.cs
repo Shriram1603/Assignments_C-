@@ -1,8 +1,8 @@
 ﻿namespace InventoryManagement.InventoryManager;
 
-public class Validator
+public class ProductValidator
 {
-    public static bool IsValidProductName(string productName) => String.IsNullOrWhiteSpace(productName) || String.IsNullOrEmpty(productName);
+    public static bool IsValidProductName(string productName) => !String.IsNullOrWhiteSpace(productName) || !String.IsNullOrEmpty(productName);
 
     public static bool IsValidPrice(double price) =>  price > 0;
 
