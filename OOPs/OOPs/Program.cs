@@ -1,6 +1,6 @@
-﻿using OOPs.EmployeeHierarchy;
-using OOPs.ShapeHierarchy;
-using OOPs.BankingSystem;
+﻿using OOPs.Hierarchy_Tasks.Shape;
+using OOPs.Hierarchy_Tasks.Employee;
+using OOPs.Hierarchy_Tasks.Banking;
 
 /// <summary>
 /// <see cref="MyProgram"/> acts as the entry point as it holds main().
