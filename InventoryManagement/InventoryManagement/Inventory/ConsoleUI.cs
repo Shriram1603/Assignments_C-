@@ -47,7 +47,8 @@ public class ConsoleUI
     /// </summary>
     public void AddProduct()
     {
-        string productName = GetName("Enter the Name of the Product : ",true);
+        Console.WriteLine("Adding Product :\n");
+        string productName = GetName("\tEnter the Name of the Product : ",true);
         if(_manager.IsProductPresent(productName))
             {
                 if(!Restock(productName))
@@ -56,19 +57,19 @@ public class ConsoleUI
                 }
                 return;
             }
-        double price = GetPrice("Enter the price of the product : ", true);
-        int quantity = GetQuantity("Enter the Quantity of the Product : ", true);
+        double price = GetPrice("\tEnter the price of the product : ", true);
+        int quantity = GetQuantity("\tEnter the Quantity of the Product : ", true);
         IProduct nonPerishable = new Product(productName,price,quantity);
         if(IsPerishable())
         {
-            DateOnly expiryDate = GetExpiryDate($"Enter the ExpiryDate (e.g., yyyy-mm-dd) : ",true);
+            DateOnly expiryDate = GetExpiryDate($"\tEnter the ExpiryDate (e.g., yyyy-mm-dd) : ",true);
             IProduct perishable = new ExpiryDecorator(nonPerishable,expiryDate);
             _manager.Add(perishable);
-            Console.WriteLine($"Product Added Successfully !!");
+            DisplaySuccess($"\t[+] Product Added Successfully !!");
             return;
         }
         _manager.Add(nonPerishable);
-        Console.WriteLine($"Product Added Successfully !!");
+        DisplaySuccess($"\t[+] Product Added Successfully !!");
         return;
     }
 
@@ -88,7 +89,7 @@ public class ConsoleUI
         }
         else
         {
-             Console.WriteLine($"\tNo Products to Show !!");
+             DisplayFailure($"\t[-] No Products to Show !!");
         }
     }
 
@@ -99,7 +100,7 @@ public class ConsoleUI
     /// </summary>
     public void EditProduct()
     {
-        string productName = GetName("Enter the name of the product You want to update : ", true);
+        string productName = GetName("\tEnter the name of the product You want to update : ", true);
         if(_manager.IsProductPresent(productName))
         {
             Console.WriteLine($"Updating {productName} - Leave the field blank if you don't want to change it !!");
@@ -110,13 +111,14 @@ public class ConsoleUI
             {
                 DateOnly expiryDate = GetExpiryDate($"\tEnter the new expiry date for [{productName}] (e.g., yyyy-mm-dd) : ", false);
                 _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate,expiryDate);
-                Console.WriteLine($"\t[+] Product [{productName}] Updated Successfully !!");
+                DisplaySuccess($"\t[+] Product [{productName}] Updated Successfully !!");
                 return;
             }
             _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate);
-            Console.WriteLine($"\t[+] Product [{productName}] Updated Successfully !!");
+            DisplaySuccess($"\t[+] Product [{productName}] Updated Successfully !!");
+            return;
         }
-        Console.WriteLine($"\t[-] No Product with name : {productName} is found");
+        DisplayFailure($"\t[-] No Product with name : {productName} is found");
         return;
     }
 
@@ -139,11 +141,19 @@ public class ConsoleUI
     /// displays the product if it is found.
     /// </summary>
     public void SearchProduct()
-    {   
-        string productName = GetName("Enter the name of the Product to search : ", true);
-        Console.WriteLine($"\nSearched Product :");
-        var product = _manager.SearchProduct(productName);
-        Console.WriteLine($"\t\t{product}");
+    {
+        try
+        {
+            string productName = GetName("\n\tEnter the name of the Product to search : ", true);
+            Console.WriteLine($"\n\tSearched Product :");
+            var product = _manager.SearchProduct(productName);
+            DisplaySuccess($"\t\t{product}");
+        }
+        catch (Exception ex)
+        {
+            DisplayFailure($"\t[-] Product [{ex.Message}] is not present in the inventory !!");
+        }
+        
     }
 
     /// <summary>
@@ -155,19 +165,19 @@ public class ConsoleUI
     /// <returns>true if restocked and false if user doesn't want to restock.</returns>
     public bool Restock(string productName)
     {
-        Console.Write("[*] Product with the same Name was Found. " +
-            "\nDo You want to Restock ? [Yes/No] : ");
+        Console.Write("\t[*] Product with the same Name was Found. " +
+            "\n\tDo You want to Restock ? [Yes/No] : ");
         var userChoice = Console.ReadLine();
         if(userChoice.Equals("yes",StringComparison.OrdinalIgnoreCase))
         {
-            int quantity = GetQuantity("Enter the Quantity to be Restocked :", true);
+            int quantity = GetQuantity("\tEnter the Quantity to be Restocked :", true);
             _manager.RestockProduct(productName,quantity);
-            Console.WriteLine($"{productName} : Restocked for {quantity}");
+            DisplaySuccess($"\n\t[+] {productName} : Restocked for {quantity}");
             return true;
         }
         else
         {
-            Console.WriteLine("[-] Then Provide a Unique Product Name or include Brand Name !!");
+            DisplayFailure("\n\t[-] Then Provide a Unique Product Name or include Brand Name !!");
             return false;
         }
     }
@@ -178,19 +188,19 @@ public class ConsoleUI
     /// </summary>
     public void DeleteProduct()
     {
-        string productName = GetName("Enter the name of the product you Want to Delete : ",true);
+        string productName = GetName("\n\tEnter the name of the product you Want to Delete : ",true);
         if(_manager.IsProductPresent(productName))
         {
             _manager.RemoveProduct(productName);
-            Console.WriteLine($"Product [{productName}] Deleted Successfully !!");
+            DisplaySuccess($"\n\t[+] Product [{productName}] Deleted Successfully !!");
             return;
         }
-        Console.WriteLine($"No Product with name : {productName} is found");  
+        DisplayFailure($"\n\t[-] No Product with name : {productName} is found");  
     }
 
     private bool IsPerishable()
     {
-        Console.Write($"Is this product Perishable ? [yes / no] : ");
+        Console.Write($"\n\tIs this product Perishable ? [yes / no] : ");
         bool isPersishable = Console.ReadLine()?.Trim().ToLower() == "yes";
         return isPersishable;
     }
@@ -206,9 +216,10 @@ public class ConsoleUI
                 {
                     return name;
                 }
-                Console.WriteLine("Product name cannot be null or Empty"); ;
+                DisplayFailure("\t[-]Product name cannot be null or Empty"); ;
             }
-            return name;
+            else if(!validate) 
+                return name;
             
         }
     }
@@ -227,7 +238,7 @@ public class ConsoleUI
             {
                 return price;
             }
-            Console.WriteLine("Invalid Price !!");
+            DisplayFailure("\t[-] Invalid Price !!");
         }       
     }
 
@@ -245,8 +256,22 @@ public class ConsoleUI
             {
                 return quantity;
             }
-            Console.WriteLine("Invalid Quantity!!");
+            DisplayFailure("\t[-] Invalid Quantity!!");
         } 
+    }
+
+    private void DisplaySuccess(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(message);
+        Console.ForegroundColor= ConsoleColor.White;
+    }
+
+    private void DisplayFailure(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(message);
+        Console.ForegroundColor= ConsoleColor.White;
     }
 
     private DateOnly GetExpiryDate(string message, bool validate)
@@ -267,7 +292,7 @@ public class ConsoleUI
             {
                 return expiryDate;
             }
-            Console.WriteLine($"Invalid Date - Date cannot be in Past !!");
+            DisplayFailure($"\t[-] Invalid Date - Date cannot be in Past !!");
         }
     }
 }

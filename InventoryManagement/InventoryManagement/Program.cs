@@ -49,7 +49,7 @@ class Program
                 Console.WriteLine("[-] Enter a Valid Choice as numbber ");
             }
         }
-        Console.WriteLine($"Thank You !!");  
+        Console.WriteLine($"\n\t\tThank You !!");  
     }
 }
 

@@ -57,10 +57,10 @@ public class InventoryManager
 
     /// <summary>
     /// Returns the <see cref="IProduct.GetDetails"/> of a specified product name
-    /// if not found returns a string stating "product not present".
+    /// if not found throws an argumenterror by passing product name.
     /// </summary>
     /// <param name="productName">Name of the product as string</param>
-    /// <returns>string <see cref="IProduct.GetDetails"/> if product is not found returns "product is not present"</returns>
+    /// <returns>string <see cref="IProduct.GetDetails"/> if product is not found throws an argumenterror by passing product name.</returns>
     public string SearchProduct(string productName)
     {   
         IProduct product = _products.FirstOrDefault( i => i.ProductName == productName);
@@ -68,7 +68,7 @@ public class InventoryManager
         {
             return product.GetDetails();
         }
-        return $"Product {productName} is not present in the inventory !!";
+        throw new ArgumentException(productName);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class InventoryManager
         IList<string> products = new List<string>();
         var ascending = _products.OrderBy(i => i.ProductName).ToList();
         var decending = _products.OrderByDescending(i => i.ProductName).ToList();
-        products.Add("\tAscending Order [name] :");
+        products.Add("\tAscending Order[name] :");
         for(int i =0 ; i < _products.Count; i++)
         {
             products.Add($"\t\t{i+1}. {ascending[i].GetDetails()}");
