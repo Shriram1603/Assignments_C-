@@ -6,7 +6,7 @@ namespace InventoryManagement.ProductDecorator;
 /// </summary>
 public abstract class ProductDecorator : IProduct
 {
-    protected readonly IProduct _product;
+    protected readonly IProduct product;
 
     /// <summary>
     /// Dependecy injection of type <see cref="IProduct"/>
@@ -15,7 +15,7 @@ public abstract class ProductDecorator : IProduct
     /// <param name="product">Object of type <see cref="IProduct"/> and it's child class <see cref="Product"/></param>
     public ProductDecorator(IProduct product)
     {
-        _product = product;
+        this.product = product;
     }
 
     /// <summary>
@@ -23,8 +23,8 @@ public abstract class ProductDecorator : IProduct
     /// </summary>
     public virtual string ProductName
     {
-        get => _product.ProductName;
-        set => _product.ProductName = value;
+        get => product.ProductName;
+        set => product.ProductName = value;
     }
 
     /// <summary>
@@ -32,8 +32,8 @@ public abstract class ProductDecorator : IProduct
     /// </summary>
     public virtual double Price
     {
-        get => _product.Price;
-        set => _product.Price = value;
+        get => product.Price;
+        set => product.Price = value;
     }
 
     /// <summary>
@@ -41,12 +41,12 @@ public abstract class ProductDecorator : IProduct
     /// </summary>
     public virtual int Quantity
     {
-        get => _product.Quantity;
-        set => _product.Quantity = value;
+        get => product.Quantity;
+        set => product.Quantity = value;
     }
 
     /// <summary>
     /// Virtual implementation of <see cref="Product.GetDetails"/> property
     /// </summary>
-    public virtual string GetDetails() => _product.GetDetails();
+    public virtual string GetDetails() => product.GetDetails();
 }
