@@ -1,4 +1,8 @@
 ﻿using InventoryManagement.Inventory;
+
+/// <summary>
+/// The <see cref="Program"/> Class is responsible for running the application.
+/// </summary>
 class Program
 {
     static void Main()

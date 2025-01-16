@@ -77,7 +77,6 @@ public class InventoryManager
             products.Add($"\t\t{i+1}. {decending[i].GetDetails()}");
         }
         return products;
-
     }
 
     public bool IsProductPresent(string productName)
