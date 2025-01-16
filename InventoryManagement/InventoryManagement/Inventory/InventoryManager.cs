@@ -72,29 +72,44 @@ public class InventoryManager
     }
 
     /// <summary>
-    /// Updates the the details
+    /// Updates the the details of a particualr product ,leaves the data as it is if the user just pressed enter.
     /// </summary>
-    /// <param name="oldName"></param>
-    /// <param name="name"></param>
-    /// <param name="price"></param>
-    /// <param name="quantity"></param>
-    public void UpdateProduct(string oldName,string name,double price,int quantity)
+    /// <param name="oldName">Name of the product to be updated</param>
+    /// <param name="updatedName">New name of the product</param>
+    /// <param name="updatedPrice">New price of the product</param>
+    /// <param name="updatedQuantity">New quantity of the product</param>
+    public void UpdateProduct(string oldName,string updatedName,double updatedPrice,int updatedQuantity)
     {
         IProduct product = _products.FirstOrDefault( i => i.Name == oldName);
-        product.Name = String.IsNullOrWhiteSpace(name) ? product.Name : name;
-        product.Price = price == 0 ? product.Price : price;
-        product.Quantity = quantity == 0 ? product.Quantity : quantity;
+        product.Name = String.IsNullOrWhiteSpace(updatedName) ? product.Name : updatedName;
+        product.Price = updatedPrice == 0 ? product.Price : updatedPrice;
+        product.Quantity = updatedQuantity == 0 ? product.Quantity : updatedQuantity;
     }
-    public void UpdateProduct(string oldName,string name,double price,int quantity,DateOnly expiryDate)
+
+
+    /// <summary>
+    /// Overloaded method of <see cref="UpdateProduct(string, string, double, int)"/> includes expiry date,
+    /// updates the the details of a particualr product ,leaves the data as it is if the user just pressed enter.
+    /// </summary>
+    /// <param name="oldName">Name of the product to be updated</param>
+    /// <param name="updatedName">New name of the product</param>
+    /// <param name="updatedPrice">New price of the product</param>
+    /// <param name="updatedQuantity">New quantity of the product</param>
+    /// <param name="expiryDate"></param>
+    public void UpdateProduct(string oldName,string updatedName,double updatedPrice,int updatedQuantity,DateOnly expiryDate)
     {
         DateOnly defaultDate = DateOnly.MinValue;
         ExpiryDecorator product = (ExpiryDecorator)_products.FirstOrDefault( i => i.Name == oldName);
-        product.Name = String.IsNullOrWhiteSpace(name) ? product.Name : name;
-        product.Price = price == 0 ? product.Price : price;
-        product.Quantity = quantity == 0 ? product.Quantity : quantity;
+        product.Name = String.IsNullOrWhiteSpace(updatedName) ? product.Name : updatedName;
+        product.Price = updatedPrice == 0 ? product.Price : updatedPrice;
+        product.Quantity = updatedQuantity == 0 ? product.Quantity : updatedQuantity;
         product.ExpiryDate = expiryDate == defaultDate ? product.ExpiryDate : expiryDate;
     }
 
+    /// <summary>
+    /// Sorts the products by name in both acending and decending order.
+    /// </summary>
+    /// <returns>List of string containing the products ordered in ascending and decending order</returns>
     public IList<string> SortProducts()
     {
         IList<string> products = new List<string>();
@@ -113,15 +128,25 @@ public class InventoryManager
         return products;
     }
 
+    /// <summary>
+    /// Finds if a product is persent in ilist <see cref="_products"/>
+    /// </summary>
+    /// <param name="productName">Name of the product to check if present in <see cref="_products"/></param>
+    /// <returns>true if present and false if not present</returns>
     public bool IsProductPresent(string productName)
     {
-        IProduct item = _products.FirstOrDefault(i => i.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
-        return item != null;
+        IProduct product = _products.FirstOrDefault(i => i.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+        return product != null;
     }
 
-    public bool IsPerishable(string name)
+    /// <summary>
+    /// Finds if a product is of type <see cref="ExpiryDecorator"/>
+    /// </summary>
+    /// <param name="productName">Name of the product to check if it is of type <see cref="ExpiryDecorator"/></param>
+    /// <returns>true if product is of type <see cref="ExpiryDecorator"/> else false</returns>
+    public bool IsPerishable(string productName)
     {
-        IProduct item = _products.FirstOrDefault( i => i.Name == name);
-        return item is ExpiryDecorator;
+        IProduct product = _products.FirstOrDefault( i => i.Name == productName);
+        return product is ExpiryDecorator;
     }
 }
