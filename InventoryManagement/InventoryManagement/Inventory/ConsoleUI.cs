@@ -47,7 +47,7 @@ public class ConsoleUI
     /// </summary>
     public void AddProduct()
     {
-        string productName = GetName("Enter the Name of the Product : ");
+        string productName = GetName("Enter the Name of the Product : ",true);
         if(_manager.IsProductPresent(productName))
             {
                 if(!Restock(productName))
@@ -56,12 +56,12 @@ public class ConsoleUI
                 }
                 return;
             }
-        double price = GetPrice("Enter the price of the product : ");
-        int quantity = GetQuantity("Enter the Quantity of the Product : ");
+        double price = GetPrice("Enter the price of the product : ", true);
+        int quantity = GetQuantity("Enter the Quantity of the Product : ", true);
         IProduct nonPerishable = new Product(productName,price,quantity);
         if(IsPerishable())
         {
-            DateOnly expiryDate = GetExpiryDate($"Enter the ExpiryDate (e.g., yyyy-mm-dd) : ");
+            DateOnly expiryDate = GetExpiryDate($"Enter the ExpiryDate (e.g., yyyy-mm-dd) : ",true);
             IProduct perishable = new ExpiryDecorator(nonPerishable,expiryDate);
             _manager.Add(perishable);
             Console.WriteLine($"Product Added Successfully !!");
@@ -99,22 +99,24 @@ public class ConsoleUI
     /// </summary>
     public void EditProduct()
     {
-        string productName = GetName("Enter the name of the product You want to update : ");
+        string productName = GetName("Enter the name of the product You want to update : ", true);
         if(_manager.IsProductPresent(productName))
-        {    
-            string productNameToUpdate = GetName($"Enter the new name for [{productName}] : ");
-            double priceToTpdate = GetPrice($"Enter the new price for [{productName}] : ");
-            int quantityToUpdate = GetQuantity($"Enter the new Quantity for [{productName}] : ");
+        {
+            Console.WriteLine($"Updating {productName} - Leave the field blank if you don't want to change it !!");
+            string productNameToUpdate = GetName($"\tEnter the new name for [{productName}] : ",false);
+            double priceToTpdate = GetPrice($"\tEnter the new price for [{productName}] : ", false);
+            int quantityToUpdate = GetQuantity($"\tEnter the new Quantity for [{productName}] : ", false);
             if(_manager.IsPerishable(productName))
             {
-                DateOnly expiryDate = GetExpiryDate($"Enter the new expiry date for [{productName}] (e.g., yyyy-mm-dd) : ");
+                DateOnly expiryDate = GetExpiryDate($"\tEnter the new expiry date for [{productName}] (e.g., yyyy-mm-dd) : ", false);
                 _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate,expiryDate);
+                Console.WriteLine($"\t[+] Product [{productName}] Updated Successfully !!");
                 return;
             }
             _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate);
-            Console.WriteLine($"Product [{productName}] Updated Successfully !!");
+            Console.WriteLine($"\t[+] Product [{productName}] Updated Successfully !!");
         }
-        Console.WriteLine($"No Product with name : {productName} is found");
+        Console.WriteLine($"\t[-] No Product with name : {productName} is found");
         return;
     }
 
@@ -138,7 +140,7 @@ public class ConsoleUI
     /// </summary>
     public void SearchProduct()
     {   
-        string productName = GetName("Enter the name of the Product to search : ");
+        string productName = GetName("Enter the name of the Product to search : ", true);
         Console.WriteLine($"\nSearched Product :");
         var product = _manager.SearchProduct(productName);
         Console.WriteLine($"\t\t{product}");
@@ -158,7 +160,7 @@ public class ConsoleUI
         var userChoice = Console.ReadLine();
         if(userChoice.Equals("yes",StringComparison.OrdinalIgnoreCase))
         {
-            int quantity = GetQuantity("Enter the Quantity to be Restocked :");
+            int quantity = GetQuantity("Enter the Quantity to be Restocked :", true);
             _manager.RestockProduct(productName,quantity);
             Console.WriteLine($"{productName} : Restocked for {quantity}");
             return true;
@@ -176,7 +178,7 @@ public class ConsoleUI
     /// </summary>
     public void DeleteProduct()
     {
-        string productName = GetName("Enter the name of the product you Want to Delete : ");
+        string productName = GetName("Enter the name of the product you Want to Delete : ",true);
         if(_manager.IsProductPresent(productName))
         {
             _manager.RemoveProduct(productName);
@@ -193,20 +195,25 @@ public class ConsoleUI
         return isPersishable;
     }
     
-    private string GetName(string message)
+    private string GetName(string message,bool validate)
     {   while(true)
         {   
             Console.Write(message);
             string name = Console.ReadLine();
-            if(!String.IsNullOrWhiteSpace(name))
+            if(validate)
             {
-                return name; 
-            }    
-            Console.WriteLine("Product name cannot be null or Empty");;
+                if (!String.IsNullOrWhiteSpace(name))
+                {
+                    return name;
+                }
+                Console.WriteLine("Product name cannot be null or Empty"); ;
+            }
+            return name;
+            
         }
     }
 
-    private double GetPrice(string message)
+    private double GetPrice(string message, bool validate)
     {   double price;
         while(true)
         {
@@ -216,17 +223,25 @@ public class ConsoleUI
             {
                 return price;
             }
+            if(!validate)
+            {
+                return price;
+            }
             Console.WriteLine("Invalid Price !!");
         }       
     }
 
-    private int GetQuantity(string message)
+    private int GetQuantity(string message, bool validate)
     {   int quantity;
         while(true)
         {
             Console.Write(message);
             var userInput = Console.ReadLine();
-            if( int.TryParse(userInput, out quantity) && quantity > 0 )
+            if( int.TryParse(userInput, out quantity) && quantity >= 0 )
+            {
+                return quantity;
+            }
+            if( !validate)
             {
                 return quantity;
             }
@@ -234,14 +249,21 @@ public class ConsoleUI
         } 
     }
 
-    private DateOnly GetExpiryDate(string message)
+    private DateOnly GetExpiryDate(string message, bool validate)
     {
         DateOnly expiryDate;
         while(true)
         {
             Console.Write(message);
             var userInput =Console.ReadLine();
-            if(DateOnly.TryParse(userInput,out expiryDate) && expiryDate > DateOnly.FromDateTime(DateTime.Now))
+            if (DateOnly.TryParse(userInput, out expiryDate))
+            {
+                if(validate && expiryDate > DateOnly.FromDateTime(DateTime.Now))
+                {
+                    return expiryDate;
+                }
+            }
+            if (!validate)
             {
                 return expiryDate;
             }

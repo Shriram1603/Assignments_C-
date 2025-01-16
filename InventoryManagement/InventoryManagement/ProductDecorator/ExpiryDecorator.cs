@@ -9,6 +9,10 @@ public class ExpiryDecorator : ProductDecorator
         ExpiryDate = expiryDate;
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public bool IsExpired(){
         var dateNow = DateOnly.FromDateTime(DateTime.Now);
         return dateNow > ExpiryDate;
