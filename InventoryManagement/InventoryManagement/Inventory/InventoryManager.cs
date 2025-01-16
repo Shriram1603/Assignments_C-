@@ -26,7 +26,7 @@ public class InventoryManager
     /// <param name="quantity">Quantity to be added to the current quantity.</param>
     public void RestockProduct(string productName,int quantity)
     {
-        IProduct product = _products.FirstOrDefault( i => i.Name == productName);
+        IProduct product = _products.FirstOrDefault( i => i.ProductName == productName);
         product.Quantity += quantity;
     }
 
@@ -36,7 +36,7 @@ public class InventoryManager
     /// <param name="productName">Name of the product</param>
     public void RemoveProduct(string productName)
     {
-        IProduct product = _products.FirstOrDefault( i => i.Name == productName);
+        IProduct product = _products.FirstOrDefault( i => i.ProductName == productName);
         _products.Remove(product);
     }
 
@@ -63,7 +63,7 @@ public class InventoryManager
     /// <returns>string <see cref="IProduct.GetDetails"/> if product is not found returns "product is not present"</returns>
     public string SearchProduct(string productName)
     {   
-        IProduct product = _products.FirstOrDefault( i => i.Name == productName);
+        IProduct product = _products.FirstOrDefault( i => i.ProductName == productName);
         if(product != null)
         {
             return product.GetDetails();
@@ -80,8 +80,8 @@ public class InventoryManager
     /// <param name="updatedQuantity">New quantity of the product</param>
     public void UpdateProduct(string oldName,string updatedName,double updatedPrice,int updatedQuantity)
     {
-        IProduct product = _products.FirstOrDefault( i => i.Name == oldName);
-        product.Name = String.IsNullOrWhiteSpace(updatedName) ? product.Name : updatedName;
+        IProduct product = _products.FirstOrDefault( i => i.ProductName == oldName);
+        product.ProductName = String.IsNullOrWhiteSpace(updatedName) ? product.ProductName : updatedName;
         product.Price = updatedPrice == 0 ? product.Price : updatedPrice;
         product.Quantity = updatedQuantity == 0 ? product.Quantity : updatedQuantity;
     }
@@ -99,8 +99,8 @@ public class InventoryManager
     public void UpdateProduct(string oldName,string updatedName,double updatedPrice,int updatedQuantity,DateOnly expiryDate)
     {
         DateOnly defaultDate = DateOnly.MinValue;
-        ExpiryDecorator product = (ExpiryDecorator)_products.FirstOrDefault( i => i.Name == oldName);
-        product.Name = String.IsNullOrWhiteSpace(updatedName) ? product.Name : updatedName;
+        ExpiryDecorator product = (ExpiryDecorator)_products.FirstOrDefault( i => i.ProductName == oldName);
+        product.ProductName = String.IsNullOrWhiteSpace(updatedName) ? product.ProductName : updatedName;
         product.Price = updatedPrice == 0 ? product.Price : updatedPrice;
         product.Quantity = updatedQuantity == 0 ? product.Quantity : updatedQuantity;
         product.ExpiryDate = expiryDate == defaultDate ? product.ExpiryDate : expiryDate;
@@ -113,8 +113,8 @@ public class InventoryManager
     public IList<string> SortProducts()
     {
         IList<string> products = new List<string>();
-        var ascending = _products.OrderBy(i => i.Name).ToList();
-        var decending = _products.OrderByDescending(i => i.Name).ToList();
+        var ascending = _products.OrderBy(i => i.ProductName).ToList();
+        var decending = _products.OrderByDescending(i => i.ProductName).ToList();
         products.Add("\tAscending Order [name] :");
         for(int i =0 ; i < _products.Count; i++)
         {
@@ -135,7 +135,7 @@ public class InventoryManager
     /// <returns>true if present and false if not present</returns>
     public bool IsProductPresent(string productName)
     {
-        IProduct product = _products.FirstOrDefault(i => i.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+        IProduct product = _products.FirstOrDefault(i => i.ProductName.Equals(productName, StringComparison.OrdinalIgnoreCase));
         return product != null;
     }
 
@@ -146,7 +146,7 @@ public class InventoryManager
     /// <returns>true if product is of type <see cref="ExpiryDecorator"/> else false</returns>
     public bool IsPerishable(string productName)
     {
-        IProduct product = _products.FirstOrDefault( i => i.Name == productName);
+        IProduct product = _products.FirstOrDefault( i => i.ProductName == productName);
         return product is ExpiryDecorator;
     }
 }
