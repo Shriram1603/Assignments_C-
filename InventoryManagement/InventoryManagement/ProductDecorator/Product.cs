@@ -26,7 +26,7 @@ public class Product : IProduct
     }
 
     /// <summary>
-    /// Generates a string containing the information of the product.
+    /// Generates a string containing the information of the <see cref="Product"/>.
     /// </summary>
     /// <returns>Details of the product as string</returns>
     public string GetDetails() => $"ID: {Id}, Product : {ProductName}, Price: {Price}, Quantity: {Quantity}";
