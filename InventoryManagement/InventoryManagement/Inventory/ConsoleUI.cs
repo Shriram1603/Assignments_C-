@@ -220,7 +220,6 @@ public class ConsoleUI
             }
             else if(!validate) 
                 return name;
-            
         }
     }
 

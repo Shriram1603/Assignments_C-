@@ -13,14 +13,16 @@ public abstract class ProductDecorator : IProduct
     /// through contructor <see cref="ProductDecorator"/> to access <see cref="Product"/>
     /// </summary>
     /// <param name="product">Object of type <see cref="IProduct"/> and it's child class <see cref="Product"/></param>
-    public ProductDecorator(IProduct product){
+    public ProductDecorator(IProduct product)
+    {
         _product = product;
     }
 
     /// <summary>
     /// Virtual implementation of <see cref="ProductName"/> property
     /// </summary>
-    public virtual string ProductName{
+    public virtual string ProductName
+    {
         get => _product.ProductName;
         set => _product.ProductName = value;
     }
@@ -28,7 +30,8 @@ public abstract class ProductDecorator : IProduct
     /// <summary>
     /// Virtual implementation of <see cref="Product.Price"/> property
     /// </summary>
-    public virtual double Price{
+    public virtual double Price
+    {
         get => _product.Price;
         set => _product.Price = value;
     }
@@ -36,7 +39,8 @@ public abstract class ProductDecorator : IProduct
     /// <summary>
     /// Virtual implementation of <see cref="Product.Quantity"/> property
     /// </summary>
-    public virtual int Quantity{
+    public virtual int Quantity
+    {
         get => _product.Quantity;
         set => _product.Quantity = value;
     }
