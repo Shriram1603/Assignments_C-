@@ -1,6 +1,5 @@
 namespace InventoryManagement.Inventory;
 using System.ComponentModel;
-using InventoryManagement.ProductDecorator;
 
 /// <summary>
 /// This class <see cref="InventoryManager"/> performs the actual CRUD, restock, sorted display,
@@ -13,7 +12,7 @@ public class InventoryManager
     /// <summary>
     /// Add's the <see cref="IProduct"/> to <see cref="_products"/> ilist.
     /// </summary>
-    /// <param name="product">Type of <see cref="Product"/></param>
+    /// <param name="product">Type of <see cref="ProductDecorator.Product"/></param>
     public void Add(Product product)
     {   
         _products.Add(product);
@@ -62,7 +61,7 @@ public class InventoryManager
     /// <param name="productName">Name of the product as string</param>
     /// <returns>string <see cref="IProduct.GetDetails"/> if product is not found throws an argumenterror by passing product name.</returns>
     public Product SearchProduct(string productName)
-    {   
+    {
         Product product = _products.FirstOrDefault( i => i.ProductName == productName);
         if(product != null)
         {

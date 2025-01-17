@@ -1,11 +1,16 @@
-namespace InventoryManagement.ProductDecorator;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InventoryManagement.Inventory;
 
 /// <summary>
-/// <see cref="Product"/> class holds the actual implementation of <see cref="IProduct"/> 
-/// storing the informations [name,price,quantity] of a product.
+/// <see cref="Product"/> class contains product name, price, quantity and expiry date.
 /// </summary>
-public class Product : IProduct 
-{   
+public class Product
+{
     private readonly Guid Id = Guid.NewGuid();
 
     /// <summary>
@@ -16,7 +21,7 @@ public class Product : IProduct
     /// <summary>
     /// Holds the price of a <see cref="Product"/> as type double.
     /// </summary>
-    public double Price { get; set;}
+    public double Price { get; set; }
 
     /// <summary>
     /// Holds the quantity of a <see cref="Product"/> as type integer.
@@ -37,7 +42,7 @@ public class Product : IProduct
     /// <param name="quantity">Quantity of the product as integer</param>
     public Product(string productName, double price, int quantity)
     {
-        ProductName =productName;
+        ProductName = productName;
         Price = price;
         Quantity = quantity;
     }
@@ -81,7 +86,9 @@ public class Product : IProduct
             string expiryStatus = IsExpired() ? "Expired" : "Not Expired";
             expiryLabel = $"Expiry Date : {ExpiryDate}, Status : {expiryStatus}.";
         }
-        
+
         return $"ID: {Id}, Product : {ProductName}, Price: {Price}, Quantity: {Quantity}, {expiryLabel}";
     }
 }
+
+

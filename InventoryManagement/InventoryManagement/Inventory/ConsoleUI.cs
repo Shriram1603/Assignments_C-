@@ -1,5 +1,4 @@
 using System;
-using InventoryManagement.ProductDecorator;
 namespace InventoryManagement.Inventory;
 
 /// <summary>
@@ -59,7 +58,7 @@ public class ConsoleUI
             }
         double price = GetPrice("\tEnter the price of the product : ", true);
         int quantity = GetQuantity("\tEnter the Quantity of the Product : ", true);
-        Product nonPerishable = new Product(productName,price,quantity);
+        Product nonPerishable = new Product(productName, price, quantity);
         if(IsPerishable())
         {
             DateOnly expiryDate = GetExpiryDate($"\tEnter the ExpiryDate (e.g., yyyy-mm-dd) : ");
