@@ -7,10 +7,10 @@ namespace InventoryManagement.Inventory;
 enum UserChoice
 {
     Add = 1,
-    Display,
-    Delete,
-    Edit,
-    Search,
-    SortedDisplay,
-    Exit
+    Display = 2,
+    Delete = 3,
+    Edit = 4,
+    Search = 5,
+    SortedDisplay = 6,
+    Exit =7
 }
