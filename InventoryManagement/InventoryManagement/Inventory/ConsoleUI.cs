@@ -47,7 +47,7 @@ public class ConsoleUI
     public void AddProduct()
     {
         Console.WriteLine("Adding Product :\n");
-        string productName = GetName("\tEnter the Name of the Product : ",true);
+        string productName = GetName("\tEnter the Name of the Product : ");
         if(_manager.IsProductPresent(productName))
             {
                 if(!Restock(productName))
@@ -56,8 +56,8 @@ public class ConsoleUI
                 }
                 return;
             }
-        double price = GetPrice("\tEnter the price of the product : ", true);
-        int quantity = GetQuantity("\tEnter the Quantity of the Product : ", true);
+        double price = GetPrice("\tEnter the price of the product : ");
+        int quantity = GetQuantity("\tEnter the Quantity of the Product : ");
         Product nonPerishable = new Product(productName, price, quantity);
         if(IsPerishable())
         {
@@ -104,12 +104,12 @@ public class ConsoleUI
         {   
             var product = _manager.SearchProduct(productName);
             Console.WriteLine($"Updating {productName} - Leave the field blank if you don't want to change it !!\n");
-            string productNameToUpdate = GetName($"\tEnter the new name for [{product.ProductName}] : ",false);
-            double priceToTpdate = GetPrice($"\tEnter the new price to update from [{product.Price}] : ", false);
-            int quantityToUpdate = GetQuantity($"\tEnter the new Quantity update from [{product.Quantity}] : ", false);
+            string productNameToUpdate = GetName($"\tEnter the new name for [{product.ProductName}] : ",true);
+            double priceToTpdate = GetPrice($"\tEnter the new price to update from [{product.Price}] : ", true);
+            int quantityToUpdate = GetQuantity($"\tEnter the new Quantity update from [{product.Quantity}] : ", true);
             if(_manager.IsPerishable(productName))
             {
-                DateOnly expiryDate = GetExpiryDateToUpdate($"\tEnter the new expiry date for [{product.ExpiryDate}] (e.g., yyyy-mm-dd) : ");
+                DateOnly expiryDate = GetExpiryDate($"\tEnter the new expiry date for [{product.ExpiryDate}] (e.g., yyyy-mm-dd) : ",true);
                 _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate,expiryDate);
                 DisplaySuccess($"\t[+] Product [{productName}] Updated Successfully !!");
                 return;
@@ -144,7 +144,7 @@ public class ConsoleUI
     {
         try
         {
-            string productName = GetName("\n\tEnter the name of the Product to search : ", true);
+            string productName = GetName("\n\tEnter the name of the Product to search : ");
             Console.WriteLine($"\n\tSearched Product :");
             var product = _manager.SearchProduct(productName);
             DisplaySuccess($"\t\t{product.GetDetails()}");
@@ -169,7 +169,7 @@ public class ConsoleUI
         var userChoice = Console.ReadLine();
         if(userChoice.Equals("yes",StringComparison.OrdinalIgnoreCase))
         {
-            int quantity = GetQuantity("\tEnter the Quantity to be Restocked :", true);
+            int quantity = GetQuantity("\tEnter the Quantity to be Restocked :");
             _manager.RestockProduct(productName,quantity);
             DisplaySuccess($"\n\t[+] {productName} : Restocked for {quantity}");
             return true;
@@ -187,7 +187,7 @@ public class ConsoleUI
     /// </summary>
     public void DeleteProduct()
     {
-        string productName = GetName("\n\tEnter the name of the product you Want to Delete : ",true);
+        string productName = GetName("\n\tEnter the name of the product you Want to Delete : ");
         if(_manager.IsProductPresent(productName))
         {
             _manager.RemoveProduct(productName);
@@ -204,25 +204,24 @@ public class ConsoleUI
         return isPersishable;
     }
     
-    private string GetName(string message,bool validate)
+    private string GetName(string message,bool update = true)
     {   while(true)
         {   
             Console.Write(message);
             string name = Console.ReadLine();
-            if(validate)
+            if(name == "" && update)
             {
-                if (!String.IsNullOrWhiteSpace(name))
-                {
-                    return name;
-                }
-                DisplayFailure("\t[-]Product name cannot be null or Empty"); ;
-            }
-            else if(!validate) 
                 return name;
+            }
+            if (!String.IsNullOrWhiteSpace(name))
+            {
+                return name;
+            }
+            DisplayFailure("\t[-]Product name cannot be null or Empty"); ;
         }
     }
 
-    private double GetPrice(string message, bool validate)
+    private double GetPrice(string message, bool update = false)
     {   double price;
         while(true)
         {
@@ -232,7 +231,7 @@ public class ConsoleUI
             {
                 return price;
             }
-            if(!validate)
+            if(userInput == "" && update)
             {
                 return price;
             }
@@ -240,7 +239,7 @@ public class ConsoleUI
         }       
     }
 
-    private int GetQuantity(string message, bool validate)
+    private int GetQuantity(string message, bool update = false)
     {   int quantity;
         while(true)
         {
@@ -250,7 +249,7 @@ public class ConsoleUI
             {
                 return quantity;
             }
-            if( !validate)
+            if(userInput == "" && update)
             {
                 return quantity;
             }
@@ -272,7 +271,7 @@ public class ConsoleUI
         Console.ForegroundColor= ConsoleColor.White;
     }
 
-    private DateOnly GetExpiryDate(string message)
+    private DateOnly GetExpiryDate(string message, bool update = false)
     {
         DateOnly expiryDate;
         while(true)
@@ -292,37 +291,13 @@ public class ConsoleUI
             }
             else
             {
+                if (userInput == "" && update)
+                {
+                    return expiryDate;
+                }
                 DisplayFailure("\t[-] Invalid Date Format. Provide in yyyy-mm-dd format!!");
             }
         }
     }
 
-    private DateOnly GetExpiryDateToUpdate(string message)
-    {
-        DateOnly expiryDate;
-        while (true)
-        {
-            Console.Write(message);
-            var userInput = Console.ReadLine();
-            if (DateOnly.TryParse(userInput, out expiryDate))
-            {   
-                if (expiryDate > DateOnly.FromDateTime(DateTime.Now))
-                {
-                    return expiryDate;
-                }
-                else
-                {
-                    DisplayFailure($"\t[-] Date cannot be in Past !!");
-                }
-            }
-            else
-            {   
-                if(userInput == "")
-                {
-                    return expiryDate;
-                }
-                DisplayFailure("\t[-] Invalid Date Format. Provide in yyyy-mm-dd format!!");
-            }
-        }
-    }
 }
