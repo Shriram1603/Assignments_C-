@@ -99,17 +99,17 @@ public class ConsoleUI
     /// </summary>
     public void EditProduct()
     {
-        string productName = GetName("Enter the name of the product You want to update : ", true);
+        string productName = GetName("Enter the name of the product You want to update : ");
         if(_manager.IsProductPresent(productName))
         {   
             var product = _manager.SearchProduct(productName);
             Console.WriteLine($"Updating {productName} - Leave the field blank if you don't want to change it !!\n");
-            string productNameToUpdate = GetName($"\tEnter the new name for [{product.ProductName}] : ",true);
-            double priceToTpdate = GetPrice($"\tEnter the new price to update from [{product.Price}] : ", true);
-            int quantityToUpdate = GetQuantity($"\tEnter the new Quantity update from [{product.Quantity}] : ", true);
+            string productNameToUpdate = GetNameToUpdate($"\tEnter the new name for [{product.ProductName}] : ");
+            double priceToTpdate = GetPriceToUpdate($"\tEnter the new price to update from [{product.Price}] : ");
+            int quantityToUpdate = GetQuantityToUpdate($"\tEnter the new Quantity update from [{product.Quantity}] : ");
             if(_manager.IsPerishable(productName))
             {
-                DateOnly expiryDate = GetExpiryDate($"\tEnter the new expiry date for [{product.ExpiryDate}] (e.g., yyyy-mm-dd) : ",true);
+                DateOnly expiryDate = GetExpiryDateToUpdate($"\tEnter the new expiry date for [{product.ExpiryDate}] (e.g., yyyy-mm-dd) : ");
                 _manager.UpdateProduct(productName,productNameToUpdate,priceToTpdate,quantityToUpdate,expiryDate);
                 DisplaySuccess($"\t[+] Product [{productName}] Updated Successfully !!");
                 return;
@@ -204,15 +204,11 @@ public class ConsoleUI
         return isPersishable;
     }
     
-    private string GetName(string message,bool update = true)
+    private string GetName(string message)
     {   while(true)
         {   
             Console.Write(message);
             string name = Console.ReadLine();
-            if(name == "" && update)
-            {
-                return name;
-            }
             if (!String.IsNullOrWhiteSpace(name))
             {
                 return name;
@@ -220,8 +216,17 @@ public class ConsoleUI
             DisplayFailure("\t[-]Product name cannot be null or Empty"); ;
         }
     }
+    private string GetNameToUpdate(string message)
+    {
+        while (true)
+        {
+            Console.Write(message);
+            string name = Console.ReadLine();
+            return name;
+        }
+    }
 
-    private double GetPrice(string message, bool update = false)
+    private double GetPrice(string message)
     {   double price;
         while(true)
         {
@@ -231,15 +236,29 @@ public class ConsoleUI
             {
                 return price;
             }
-            if(userInput == "" && update)
+            DisplayFailure("\t[-] Invalid Price !! - Price should be in numeric value");
+        }       
+    }
+    private double GetPriceToUpdate(string message)
+    {
+        double price;
+        while (true)
+        {
+            Console.Write($"{message}");
+            var userInput = Console.ReadLine();
+            if (double.TryParse(userInput, out price) && price > 0)
+            {
+                return price;
+            }
+            if (userInput == "")
             {
                 return price;
             }
             DisplayFailure("\t[-] Invalid Price !! - Price should be in numeric value");
-        }       
+        }
     }
 
-    private int GetQuantity(string message, bool update = false)
+    private int GetQuantity(string message)
     {   int quantity;
         while(true)
         {
@@ -249,12 +268,27 @@ public class ConsoleUI
             {
                 return quantity;
             }
-            if(userInput == "" && update)
+            DisplayFailure("\t[-] Invalid Quantity!! - Quantity should be in numeric value");
+        } 
+    }
+
+    private int GetQuantityToUpdate(string message)
+    {
+        int quantity;
+        while (true)
+        {
+            Console.Write(message);
+            var userInput = Console.ReadLine();
+            if (int.TryParse(userInput, out quantity) && quantity >= 0)
+            {
+                return quantity;
+            }
+            if (userInput == "")
             {
                 return quantity;
             }
             DisplayFailure("\t[-] Invalid Quantity!! - Quantity should be in numeric value");
-        } 
+        }
     }
 
     private void DisplaySuccess(string message)
@@ -271,7 +305,7 @@ public class ConsoleUI
         Console.ForegroundColor= ConsoleColor.White;
     }
 
-    private DateOnly GetExpiryDate(string message, bool update = false)
+    private DateOnly GetExpiryDate(string message)
     {
         DateOnly expiryDate;
         while(true)
@@ -291,7 +325,31 @@ public class ConsoleUI
             }
             else
             {
-                if (userInput == "" && update)
+                DisplayFailure("\t[-] Invalid Date Format. Provide in yyyy-mm-dd format!!");
+            }
+        }
+    }
+    private DateOnly GetExpiryDateToUpdate(string message)
+    {
+        DateOnly expiryDate;
+        while (true)
+        {
+            Console.Write(message);
+            var userInput = Console.ReadLine();
+            if (DateOnly.TryParse(userInput, out expiryDate))
+            {
+                if (expiryDate > DateOnly.FromDateTime(DateTime.Now))
+                {
+                    return expiryDate;
+                }
+                else
+                {
+                    DisplayFailure($"\t[-] Date cannot be in Past !!");
+                }
+            }
+            else
+            {
+                if (userInput == "")
                 {
                     return expiryDate;
                 }
