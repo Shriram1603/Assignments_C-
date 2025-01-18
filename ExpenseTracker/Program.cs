@@ -33,6 +33,9 @@ namespace ExpenseTracker
                     case UserChoice.Exit:
                         isRunning = false;
                         break;
+                    case UserChoice.FinancialSummary:
+                        _manager.ShowSummary();
+                        break;
                     default:
                         Console.WriteLine("That Feature is not available Yet !!");
                         break;

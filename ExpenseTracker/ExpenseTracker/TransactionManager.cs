@@ -58,6 +58,12 @@ public class TransactionManager
 
     }
 
+    public void ShowSummary()
+    {
+        string summary = _repository.ShowTransactionSummary();
+        _consoleUI.DisplaySuccess(summary);
+    }
+
 
 
 }

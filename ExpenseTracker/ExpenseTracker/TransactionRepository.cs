@@ -31,6 +31,25 @@ public class TransactionRepository
         return _financialRecords;
     }
 
+    public string ShowTransactionSummary()
+    {
+        double totalIncome = 0;
+        double totalExpense = 0;
+        foreach (IFinancialRecord record in _financialRecords)
+        {
+            if(record is Expense)
+            {
+                totalExpense += record.Amount;
+            }
+            else
+            {
+                totalIncome += record.Amount;
+            }
+        }
+        double netBalance = totalIncome - totalExpense;
+        return $"Financial Summary : \n\n\tTotal Expense : {totalExpense}\n\tTotalIncome : {totalIncome}\n\tBalance : {netBalance}";
+    }
+
     public void EditRecord(IFinancialRecord record, double amount, DateOnly transactionDate, string category)
     {
         record.Amount = amount;

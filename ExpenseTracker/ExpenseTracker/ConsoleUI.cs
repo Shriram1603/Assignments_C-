@@ -124,12 +124,11 @@ public class ConsoleUI
     private void DrawMenu(string[] categories, int selectedIndex)
     {
         Console.Clear();
-        Console.WriteLine("Pick a Category / Source :");
+        Console.WriteLine("Pick a cause for the transaction :");
         Console.SetCursorPosition(0, 2);
 
         for (int i = 0; i < categories.Length; i++)
         {
-
             if (i == selectedIndex)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
