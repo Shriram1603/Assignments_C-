@@ -8,12 +8,12 @@ public class Expense : IFinancialRecord
     public DateTime TransactionTimeStamp { get; set; }
     public string Category { get; set; }
 
-    public Expense(double amount, DateOnly transactionDate, DateTime transactionTimeStamp, string category)
+    public Expense(double amount, DateOnly transactionDate, string category)
     {
-        Id = $"{category}-{GenerateId}";
+        Id = $"{category}-{GenerateId()}";
         Amount = amount;
         TransactionDate = transactionDate;
-        TransactionTimeStamp = transactionTimeStamp;
+        TransactionTimeStamp = DateTime.Now;
         Category = category;
     }
 

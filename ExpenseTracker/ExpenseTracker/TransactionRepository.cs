@@ -38,7 +38,7 @@ public class TransactionRepository
         record.SetType(category);
     }
 
-    public bool isRecordPresent(string id)
+    public bool IsRecordPresent(string id)
     {
         IFinancialRecord record = getRecord(id);
         return record != null;

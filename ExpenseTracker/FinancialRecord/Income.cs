@@ -9,18 +9,19 @@ public class Income : IFinancialRecord
 
     public string Source { get; set; }
 
-    public Income(double amount, DateOnly transactionDate, DateTime transactionTimeStamp, string source)
+    public Income(double amount, DateOnly transactionDate, string source)
     {
         Id = $"{source}-{GenerateId()}";
         Amount = amount;
         TransactionDate = transactionDate;
-        TransactionTimeStamp = transactionTimeStamp;
+        TransactionTimeStamp = DateTime.Now;
         Source = source;
     }
     public string GenerateId()
     {
         return Guid.NewGuid().ToString().Substring(0, 4);
     }
+
     public string GetType()
     {
         return Source;
