@@ -16,4 +16,10 @@ public class TransactionManager
         _repository = repository;
         this.consoleUI = consoleUI;
     }
+
+    public void AddExpense()
+    {
+
+    }
+
 }
