@@ -8,18 +8,11 @@ namespace ExpenseTracker.FinancialRecord;
 
 public interface IFinancialRecord
 {
-    
-    public void SetAmount(double amount);
-    public void setTransactionDate(DateOnly date);
-    public string GenerateId();
-
-    public string GetType();
-
     public string GetId();
-
+    public void SetAmount(double amount);
     public double GetAmount();
-
+    public void setTransactionDate(DateOnly date);
     public DateOnly GetTransactionDate();
-
+    public string GetType();
     public void SetType(string type);
 }

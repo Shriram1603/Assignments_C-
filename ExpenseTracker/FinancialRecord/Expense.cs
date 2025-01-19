@@ -23,6 +23,8 @@ public class Expense : IFinancialRecord
 
     public DateOnly GetTransactionDate() => TransactionDate;
 
+    public string GetType() => Category;
+    public string GenerateId() => Guid.NewGuid().ToString().Substring(0, 4);
     public void SetAmount(double amount)
     {
         Amount = amount;
@@ -31,11 +33,6 @@ public class Expense : IFinancialRecord
     {
         TransactionDate = date;
     }
-
-    public string GenerateId() => Guid.NewGuid().ToString().Substring(0, 4);
-
-    public string GetType() => Category;
-
     public void SetType(string category)
     {
         Category = category;

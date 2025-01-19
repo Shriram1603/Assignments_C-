@@ -32,8 +32,8 @@ public class ConsoleUI
     {
         string[] categories = { "Rent", "Food", "Utilities", "Entertainment", "Transport" };
         string category = CreateDropDown(categories);
-        double amount = GetAmount();
-        DateOnly recordDate = GetRecordDate();
+        double amount = GetAmount("Enter the amount :");
+        DateOnly recordDate = GetRecordDate("Enter the Date of format  [yyyy-mm-dd] :");
         IFinancialRecord record = new Expense(amount, recordDate, category);
         Console.Clear();
         return record;
@@ -43,8 +43,8 @@ public class ConsoleUI
     {
         string[] sources = { "Salary", "FreeLance", "Trading", "Fixed-Deposit", "Bank-insurance" };
         string source = CreateDropDown(sources);
-        double amount = GetAmount();
-        DateOnly recordDate = GetRecordDate();
+        double amount = GetAmount("Enter the amount :");
+        DateOnly recordDate = GetRecordDate("Enter the Date of format  [yyyy-mm-dd] :");
         IFinancialRecord record = new Income(amount, recordDate, source);
         Console.Clear();
         return record;
@@ -142,13 +142,13 @@ public class ConsoleUI
         }
     }
 
-    private DateOnly GetRecordDate()
+    public DateOnly GetRecordDate(string message)
     {
         while (true)
         {
             try
             {
-                Console.Write("Enter the Date of format  [yyyy-mm-dd] :");
+                Console.Write(message);
                 var userInput = Console.ReadLine();
                 DateOnly recordDate = GetValidDate(userInput);
                 return recordDate;
@@ -172,13 +172,13 @@ public class ConsoleUI
         }
     }
 
-    private double GetAmount()
+    public double GetAmount(string message)
     {
         while (true)
         {
             try
             {
-                Console.Write("Enter the amount :");
+                Console.Write(message);
                 var userInput = Console.ReadLine();
                 double amount = GetValidAmount(userInput);
                 return amount;

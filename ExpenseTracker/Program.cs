@@ -26,6 +26,7 @@ namespace ExpenseTracker
                         _manager.RemoveRecord();
                         break;
                     case UserChoice.Edit:
+                        _manager.UpdateRecord();
                         break;
                     case UserChoice.Display:
                         _manager.DisplayRecords();

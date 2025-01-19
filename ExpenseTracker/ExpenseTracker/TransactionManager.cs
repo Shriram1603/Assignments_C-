@@ -29,6 +29,23 @@ public class TransactionManager
         _consoleUI.DisplaySuccess("[+] Record added Successfully !!");
     }
 
+    public void UpdateRecord()
+    {
+        string id = _consoleUI.GetId("Enter the Id of the expense you want to update ?");
+        if (_repository.IsRecordPresent(id))
+        {
+            IFinancialRecord record = _repository.getRecord(id);
+            _consoleUI.DisplaySuccess($"Updating {record.GetId()}");
+            double amount = _consoleUI.GetAmount($"Enter the Amount [{record.GetAmount()}] : ");
+            DateOnly dateToUpdate = _consoleUI.GetRecordDate($"Enter the Date of format  [yyyy-mm-dd] [{record.GetTransactionDate()}] : ");
+            _consoleUI.DisplaySuccess($"[+] Record {id} Updated successfully !!");
+        }
+        else
+        {
+            _consoleUI.DisplayFailure($"[-] No record with id : {id} is found");
+        }
+    }
+
     public void AddIncome()
     {
         IFinancialRecord record = _consoleUI.AddIncome();

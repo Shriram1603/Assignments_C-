@@ -31,6 +31,12 @@ public class TransactionRepository
         return _financialRecords;
     }
 
+    public void UpdateRecord(IFinancialRecord record,double amount,DateOnly transactionDate)
+    {
+        record.SetAmount(amount);
+        record.setTransactionDate(transactionDate);
+
+    }
     public string ShowTransactionSummary()
     {
         double totalIncome = 0;
@@ -49,7 +55,10 @@ public class TransactionRepository
             }
         }
         double netBalance = totalIncome - totalExpense;
-        return $"Financial Summary : \n\n\tTotal Expense : {totalExpense}\n\tTotalIncome : {totalIncome}\n\tBalance : {netBalance}";
+        return @$"Financial Summary : 
+            Total Expense   : {totalExpense}
+            Total Income    : {totalIncome}
+            Balance         : {netBalance}";
     }
 
     public void EditRecord(IFinancialRecord record, double amount, DateOnly transactionDate, string category)
